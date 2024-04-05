@@ -1,0 +1,11 @@
+service: 'service.py:svc'
+name: 'Intent-classificaiton'
+labels:
+  owner: ZennoAI
+  project: gallery
+include:
+- '*.py'
+python:
+  requirements_txt: './requirements.txt'
+  packages:
+    - torch
