@@ -3,8 +3,8 @@ import torch
 import bentoml 
 import json
 from bentoml.io import Text
-from src.processing_pipeline.label_mapping import label_mapping
-from src.processing_pipeline.text_processing import clean_text, lemmatizer, numericalize
+from label_mapping import label_mapping
+from text_processing import clean_text, lemmatizer, numericalize
 from classifier_model import *
 
 device = 'mps' if torch.cuda.is_available() else 'cpu'
@@ -17,6 +17,7 @@ with open(vocab_path, 'r') as f:
 
 classifier = bentoml.pytorch.get('classifier:latest').to_runner()
 svc = bentoml.Service('classifier', runners=[classifier])
+
 
 @svc.api(input=Text(), output=Text()) 
 def inference(text: str):

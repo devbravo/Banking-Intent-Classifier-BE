@@ -3,7 +3,6 @@ import torch
 import bentoml 
 import yaml
 import os
-import sys
 from classifier_model import IntentClassifier
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -22,7 +21,7 @@ def load_model_and_save_to_bento(model_file: Path) -> None:
   
 if __name__ == '__main__':
   current_dir = os.path.dirname(os.path.realpath(__file__))
-  model_path = os.path.join(current_dir,  './class_model.pth')
+  model_path = os.path.join(current_dir,  './model/class_model.pth')
   print('path', model_path)
   
   load_model_and_save_to_bento(Path(model_path))

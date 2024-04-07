@@ -1,11 +1,15 @@
 service: 'service.py:svc'
-name: 'Intent-classificaiton'
+name: 'intent-classification'
 labels:
   owner: ZennoAI
   project: gallery
 include:
 - '*.py'
+- '*.pt'
+- '*.json'
+- 'nltk_data'
 python:
   requirements_txt: './requirements.txt'
-  packages:
-    - torch
+models: 
+- 'classifier:latest'
+- tag: 'classifier:mnxlqfxttgcsdytg'
