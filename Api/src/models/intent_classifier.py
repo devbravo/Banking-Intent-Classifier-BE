@@ -1,17 +1,12 @@
 import torch 
 import torch.nn as nn 
 import torch.nn.init as init
-import os
-
-current_dir = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(current_dir, './data/embedding_matrix.pt')
-embedding_matrix = torch.load(file_path)
 
 class IntentClassifier(nn.Module):
     def __init__(self, config: dict):
         super().__init__()
         self.config = config
-        self.embedding = nn.Embedding.from_pretrained(embedding_matrix, freeze=True)
+        self.embedding = nn.Embedding.from_pretrained('/data/embedding_matrix.pt', freeze=True)
 
         self.bi_lstm = nn.LSTM(config['input_size'], config['hidden_size'],
                              config['num_layers'], dropout=config['dropout_lstm'],

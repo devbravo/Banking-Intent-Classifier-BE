@@ -5,30 +5,13 @@ from nltk import pos_tag
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 import nltk
-import sys
 import os
 
-# download_dir = os.path.abspath('nltk_data')
-# os.makedirs(download_dir)
-# # Download the resources
-# nltk.download('averaged_perceptron_tagger', download_dir=download_dir)
-# nltk.download('wordnet', download_dir=download_dir)
-# nltk.download('punkt', download_dir=download_dir)
-# nltk.download('stopwords', download_dir=download_dir)
 
-
-# Get the directory of the current script
-root = os.path.dirname(os.path.abspath(__file__))
-nltk_data_dir = os.path.join(root, 'nltk_data')
-
-# Set NLTK data path
-nltk.data.path.append(nltk_data_dir)
-
-# Load specific NLTK data
-nltk.data.load(os.path.join(nltk_data_dir, 'tokenizers/punkt/PY3/english.pickle'))
-nltk.data.load(os.path.join(nltk_data_dir, 'taggers/averaged_perceptron_tagger/averaged_perceptron_tagger.pickle'))
-nltk.data.load(os.path.join(nltk_data_dir, 'corpora/stopwords/english'), format='text')
-
+nltk.data.path.append('nltk_data')
+nltk.data.load(os.path.join('nltk_data', 'tokenizers/punkt/PY3/english.pickle'))
+nltk.data.load(os.path.join('nltk_data', 'taggers/averaged_perceptron_tagger/averaged_perceptron_tagger.pickle'))
+nltk.data.load(os.path.join('nltk_data', 'corpora/stopwords/english'), format='text')
 
 def clean_text(text):
     """

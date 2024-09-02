@@ -58,15 +58,6 @@
         "documentation": {}
     },
     {
-        "label": "sys",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "sys",
-        "description": "sys",
-        "detail": "sys",
-        "documentation": {}
-    },
-    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -230,56 +221,11 @@
         "documentation": {}
     },
     {
-        "label": "root",
-        "kind": 5,
-        "importPath": "src.data_preprocessing.text_processing",
-        "description": "src.data_preprocessing.text_processing",
-        "peekOfCode": "root = os.path.dirname(os.path.abspath(__file__))\nnltk_data_dir = os.path.join(root, 'nltk_data')\n# Set NLTK data path\nnltk.data.path.append(nltk_data_dir)\n# Load specific NLTK data\nnltk.data.load(os.path.join(nltk_data_dir, 'tokenizers/punkt/PY3/english.pickle'))\nnltk.data.load(os.path.join(nltk_data_dir, 'taggers/averaged_perceptron_tagger/averaged_perceptron_tagger.pickle'))\nnltk.data.load(os.path.join(nltk_data_dir, 'corpora/stopwords/english'), format='text')\ndef clean_text(text):\n    \"\"\"",
-        "detail": "src.data_preprocessing.text_processing",
-        "documentation": {}
-    },
-    {
-        "label": "nltk_data_dir",
-        "kind": 5,
-        "importPath": "src.data_preprocessing.text_processing",
-        "description": "src.data_preprocessing.text_processing",
-        "peekOfCode": "nltk_data_dir = os.path.join(root, 'nltk_data')\n# Set NLTK data path\nnltk.data.path.append(nltk_data_dir)\n# Load specific NLTK data\nnltk.data.load(os.path.join(nltk_data_dir, 'tokenizers/punkt/PY3/english.pickle'))\nnltk.data.load(os.path.join(nltk_data_dir, 'taggers/averaged_perceptron_tagger/averaged_perceptron_tagger.pickle'))\nnltk.data.load(os.path.join(nltk_data_dir, 'corpora/stopwords/english'), format='text')\ndef clean_text(text):\n    \"\"\"\n    Descr: Clean text data by removing punctuation, stopwords, and converting to lowercase.",
-        "detail": "src.data_preprocessing.text_processing",
-        "documentation": {}
-    },
-    {
         "label": "IntentClassifier",
         "kind": 6,
         "importPath": "src.models.intent_classifier",
         "description": "src.models.intent_classifier",
-        "peekOfCode": "class IntentClassifier(nn.Module):\n    def __init__(self, config: dict):\n        super().__init__()\n        self.config = config\n        self.embedding = nn.Embedding.from_pretrained(embedding_matrix, freeze=True)\n        self.bi_lstm = nn.LSTM(config['input_size'], config['hidden_size'],\n                             config['num_layers'], dropout=config['dropout_lstm'],\n                             batch_first=True, bidirectional=True)\n        self.dropout_bilstm = nn.Dropout(p=config['dropout_lstm'])\n        self.act1 = nn.GELU()",
-        "detail": "src.models.intent_classifier",
-        "documentation": {}
-    },
-    {
-        "label": "current_dir",
-        "kind": 5,
-        "importPath": "src.models.intent_classifier",
-        "description": "src.models.intent_classifier",
-        "peekOfCode": "current_dir = os.path.dirname(os.path.realpath(__file__))\nfile_path = os.path.join(current_dir, './data/embedding_matrix.pt')\nembedding_matrix = torch.load(file_path)\nclass IntentClassifier(nn.Module):\n    def __init__(self, config: dict):\n        super().__init__()\n        self.config = config\n        self.embedding = nn.Embedding.from_pretrained(embedding_matrix, freeze=True)\n        self.bi_lstm = nn.LSTM(config['input_size'], config['hidden_size'],\n                             config['num_layers'], dropout=config['dropout_lstm'],",
-        "detail": "src.models.intent_classifier",
-        "documentation": {}
-    },
-    {
-        "label": "file_path",
-        "kind": 5,
-        "importPath": "src.models.intent_classifier",
-        "description": "src.models.intent_classifier",
-        "peekOfCode": "file_path = os.path.join(current_dir, './data/embedding_matrix.pt')\nembedding_matrix = torch.load(file_path)\nclass IntentClassifier(nn.Module):\n    def __init__(self, config: dict):\n        super().__init__()\n        self.config = config\n        self.embedding = nn.Embedding.from_pretrained(embedding_matrix, freeze=True)\n        self.bi_lstm = nn.LSTM(config['input_size'], config['hidden_size'],\n                             config['num_layers'], dropout=config['dropout_lstm'],\n                             batch_first=True, bidirectional=True)",
-        "detail": "src.models.intent_classifier",
-        "documentation": {}
-    },
-    {
-        "label": "embedding_matrix",
-        "kind": 5,
-        "importPath": "src.models.intent_classifier",
-        "description": "src.models.intent_classifier",
-        "peekOfCode": "embedding_matrix = torch.load(file_path)\nclass IntentClassifier(nn.Module):\n    def __init__(self, config: dict):\n        super().__init__()\n        self.config = config\n        self.embedding = nn.Embedding.from_pretrained(embedding_matrix, freeze=True)\n        self.bi_lstm = nn.LSTM(config['input_size'], config['hidden_size'],\n                             config['num_layers'], dropout=config['dropout_lstm'],\n                             batch_first=True, bidirectional=True)\n        self.dropout_bilstm = nn.Dropout(p=config['dropout_lstm'])",
+        "peekOfCode": "class IntentClassifier(nn.Module):\n    def __init__(self, config: dict):\n        super().__init__()\n        self.config = config\n        self.embedding = nn.Embedding.from_pretrained('/data/embedding_matrix.pt', freeze=True)\n        self.bi_lstm = nn.LSTM(config['input_size'], config['hidden_size'],\n                             config['num_layers'], dropout=config['dropout_lstm'],\n                             batch_first=True, bidirectional=True)\n        self.dropout_bilstm = nn.Dropout(p=config['dropout_lstm'])\n        self.act1 = nn.GELU()",
         "detail": "src.models.intent_classifier",
         "documentation": {}
     },
@@ -297,34 +243,7 @@
         "kind": 2,
         "importPath": "src.utils.save_model_to_bento",
         "description": "src.utils.save_model_to_bento",
-        "peekOfCode": "def load_model_and_save_to_bento(model_file: Path) -> None: \n  lstm_model = IntentClassifier(config).to(device)\n  lstm_model.load_state_dict(torch.load(model_file, map_location=torch.device(device)))\n  bento_model = bentoml.pytorch.save_model('classifier', model=lstm_model)\n  print(f'Bento model tag = {bento_model.tag}')\nif __name__ == '__main__':\n  current_dir = os.path.dirname(os.path.realpath(__file__))\n  model_path = os.path.join(current_dir,  './model/class_model.pth')\n  print('path', model_path)\n  load_model_and_save_to_bento(Path(model_path))",
-        "detail": "src.utils.save_model_to_bento",
-        "documentation": {}
-    },
-    {
-        "label": "current_dir",
-        "kind": 5,
-        "importPath": "src.utils.save_model_to_bento",
-        "description": "src.utils.save_model_to_bento",
-        "peekOfCode": "current_dir = os.path.dirname(os.path.realpath(__file__))\nfile_path = os.path.join(current_dir,  './config.yaml')\nwith open(file_path, 'r') as f: \n  config = yaml.safe_load(f)\ndevice = 'mps' if torch.cuda.is_available() else 'cpu'\ndef load_model_and_save_to_bento(model_file: Path) -> None: \n  lstm_model = IntentClassifier(config).to(device)\n  lstm_model.load_state_dict(torch.load(model_file, map_location=torch.device(device)))\n  bento_model = bentoml.pytorch.save_model('classifier', model=lstm_model)\n  print(f'Bento model tag = {bento_model.tag}')",
-        "detail": "src.utils.save_model_to_bento",
-        "documentation": {}
-    },
-    {
-        "label": "file_path",
-        "kind": 5,
-        "importPath": "src.utils.save_model_to_bento",
-        "description": "src.utils.save_model_to_bento",
-        "peekOfCode": "file_path = os.path.join(current_dir,  './config.yaml')\nwith open(file_path, 'r') as f: \n  config = yaml.safe_load(f)\ndevice = 'mps' if torch.cuda.is_available() else 'cpu'\ndef load_model_and_save_to_bento(model_file: Path) -> None: \n  lstm_model = IntentClassifier(config).to(device)\n  lstm_model.load_state_dict(torch.load(model_file, map_location=torch.device(device)))\n  bento_model = bentoml.pytorch.save_model('classifier', model=lstm_model)\n  print(f'Bento model tag = {bento_model.tag}')\nif __name__ == '__main__':",
-        "detail": "src.utils.save_model_to_bento",
-        "documentation": {}
-    },
-    {
-        "label": "device",
-        "kind": 5,
-        "importPath": "src.utils.save_model_to_bento",
-        "description": "src.utils.save_model_to_bento",
-        "peekOfCode": "device = 'mps' if torch.cuda.is_available() else 'cpu'\ndef load_model_and_save_to_bento(model_file: Path) -> None: \n  lstm_model = IntentClassifier(config).to(device)\n  lstm_model.load_state_dict(torch.load(model_file, map_location=torch.device(device)))\n  bento_model = bentoml.pytorch.save_model('classifier', model=lstm_model)\n  print(f'Bento model tag = {bento_model.tag}')\nif __name__ == '__main__':\n  current_dir = os.path.dirname(os.path.realpath(__file__))\n  model_path = os.path.join(current_dir,  './model/class_model.pth')\n  print('path', model_path)",
+        "peekOfCode": "def load_model_and_save_to_bento(model_file: Path) -> None: \n  \"\"\"\n    Load a trained PyTorch model from a file and save it to BentoML.\n    Args:\n        model_file (Path): Path to the trained PyTorch model's state dictionary.\n    \"\"\"\n  lstm_model = IntentClassifier(config).to(device)\n  lstm_model.load_state_dict(torch.load(model_file, map_location=torch.device(device)))\n  bento_model = bentoml.pytorch.save_model('classifier', model=lstm_model)\n  print(f'Bento model tag = {bento_model.tag}')",
         "detail": "src.utils.save_model_to_bento",
         "documentation": {}
     },
@@ -333,34 +252,7 @@
         "kind": 2,
         "importPath": "service",
         "description": "service",
-        "peekOfCode": "def inference(text: str):\n  cleaned_text = clean_text(text)\n  lemmatized_text = lemmatizer(cleaned_text)\n  numericalized_text = numericalize(vocab, lemmatized_text)\n  tensor_text = torch.tensor(numericalized_text)\n  with torch.no_grad():\n    pred = classifier.run(tensor_text)\n    pred = torch.argmax(pred, dim=1).cpu().numpy()\n    predicted_label = label_mapping[pred[0]]\n    print(\"Predicted_label\", predicted_label)",
-        "detail": "service",
-        "documentation": {}
-    },
-    {
-        "label": "device",
-        "kind": 5,
-        "importPath": "service",
-        "description": "service",
-        "peekOfCode": "device = 'mps' if torch.cuda.is_available() else 'cpu'\ncurrent_dir = os.path.dirname(os.path.realpath(__file__))\nvocab_path = os.path.join(current_dir, './data/vocab.json')\nwith open(vocab_path, 'r') as f:\n    vocab = json.load(f)\nclassifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text()) \ndef inference(text: str):\n  cleaned_text = clean_text(text)",
-        "detail": "service",
-        "documentation": {}
-    },
-    {
-        "label": "current_dir",
-        "kind": 5,
-        "importPath": "service",
-        "description": "service",
-        "peekOfCode": "current_dir = os.path.dirname(os.path.realpath(__file__))\nvocab_path = os.path.join(current_dir, './data/vocab.json')\nwith open(vocab_path, 'r') as f:\n    vocab = json.load(f)\nclassifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text()) \ndef inference(text: str):\n  cleaned_text = clean_text(text)\n  lemmatized_text = lemmatizer(cleaned_text)",
-        "detail": "service",
-        "documentation": {}
-    },
-    {
-        "label": "vocab_path",
-        "kind": 5,
-        "importPath": "service",
-        "description": "service",
-        "peekOfCode": "vocab_path = os.path.join(current_dir, './data/vocab.json')\nwith open(vocab_path, 'r') as f:\n    vocab = json.load(f)\nclassifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text()) \ndef inference(text: str):\n  cleaned_text = clean_text(text)\n  lemmatized_text = lemmatizer(cleaned_text)\n  numericalized_text = numericalize(vocab, lemmatized_text)",
+        "peekOfCode": "def inference(text: str) -> str:\n  \"\"\"\n    Perform inference on input text to predict the customer's intent.\n    Args:\n        text (str): The input text from the user for which the intent is to be predicted.\n    Returns:\n        str: The predicted label representing the customer's intent.\n    \"\"\"\n  cleaned_text = clean_text(text)\n  lemmatized_text = lemmatizer(cleaned_text)",
         "detail": "service",
         "documentation": {}
     },
@@ -369,7 +261,7 @@
         "kind": 5,
         "importPath": "service",
         "description": "service",
-        "peekOfCode": "classifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text()) \ndef inference(text: str):\n  cleaned_text = clean_text(text)\n  lemmatized_text = lemmatizer(cleaned_text)\n  numericalized_text = numericalize(vocab, lemmatized_text)\n  tensor_text = torch.tensor(numericalized_text)\n  with torch.no_grad():\n    pred = classifier.run(tensor_text)",
+        "peekOfCode": "classifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text()) \ndef inference(text: str) -> str:\n  \"\"\"\n    Perform inference on input text to predict the customer's intent.\n    Args:\n        text (str): The input text from the user for which the intent is to be predicted.\n    Returns:\n        str: The predicted label representing the customer's intent.",
         "detail": "service",
         "documentation": {}
     },
@@ -378,7 +270,7 @@
         "kind": 5,
         "importPath": "service",
         "description": "service",
-        "peekOfCode": "svc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text()) \ndef inference(text: str):\n  cleaned_text = clean_text(text)\n  lemmatized_text = lemmatizer(cleaned_text)\n  numericalized_text = numericalize(vocab, lemmatized_text)\n  tensor_text = torch.tensor(numericalized_text)\n  with torch.no_grad():\n    pred = classifier.run(tensor_text)\n    pred = torch.argmax(pred, dim=1).cpu().numpy()",
+        "peekOfCode": "svc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text()) \ndef inference(text: str) -> str:\n  \"\"\"\n    Perform inference on input text to predict the customer's intent.\n    Args:\n        text (str): The input text from the user for which the intent is to be predicted.\n    Returns:\n        str: The predicted label representing the customer's intent.\n    \"\"\"",
         "detail": "service",
         "documentation": {}
     }
