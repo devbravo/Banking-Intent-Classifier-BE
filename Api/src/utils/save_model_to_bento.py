@@ -3,7 +3,7 @@ import torch
 import bentoml 
 import yaml
 import os
-from classifier_model import IntentClassifier
+from src.models.intent_classifier import IntentClassifier
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 file_path = os.path.join(current_dir,  './config.yaml')

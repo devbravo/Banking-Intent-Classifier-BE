@@ -3,9 +3,9 @@ import torch
 import bentoml 
 import json
 from bentoml.io import Text
-from label_mapping import label_mapping
-from text_processing import clean_text, lemmatizer, numericalize
-from classifier_model import *
+from src.utils.label_mapping import label_mapping
+from src.data_preprocessing.text_processing import clean_text, lemmatizer, numericalize
+from src.models.intent_classifier import *
 
 device = 'mps' if torch.cuda.is_available() else 'cpu'
 current_dir = os.path.dirname(os.path.realpath(__file__))
