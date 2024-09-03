@@ -45,7 +45,7 @@ def inference(text: str) -> str:
                       be predicted.
       Returns:
           str: The predicted label representing the customer's intent.
-      """
+    """
     cleaned_text = clean_text(text)
     lemmatized_text = lemmatizer(cleaned_text)
     numericalized_text = numericalize(vocab, lemmatized_text)
