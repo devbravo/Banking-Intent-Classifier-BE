@@ -20,7 +20,7 @@ Dependencies:
 """
 
 import re
-import os
+# import os
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk import pos_tag
@@ -30,18 +30,23 @@ import nltk
 
 
 nltk.data.path.append('nltk_data')
-nltk.data.load(os.path.join('nltk_data',
-                            'tokenizers/punkt/PY3/english.pickle'))
-nltk.data.load(
-    os.path.join(
-        'nltk_data',
-        'taggers',
-        'averaged_perceptron_tagger',
-        'averaged_perceptron_tagger.pickle'
-    )
-)
-nltk.data.load(os.path.join('nltk_data', 'corpora/stopwords/english'),
-               format='text')
+# nltk.data.load(os.path.join('nltk_data',
+#                             'tokenizers/punkt/PY3/english.pickle'))
+# nltk.data.load(
+#     os.path.join(
+#         'nltk_data',
+#         'taggers',
+#         'averaged_perceptron_tagger',
+#         'averaged_perceptron_tagger.pickle'
+#     )
+# )
+# nltk.data.load(os.path.join('nltk_data', 'corpora/stopwords/english'),
+#                format='text')
+
+nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('averaged_perceptron_tagger_eng')
+nltk.download('stopwords')
 
 
 def clean_text(text: str) -> str:

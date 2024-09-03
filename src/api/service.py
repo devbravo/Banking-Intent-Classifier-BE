@@ -57,15 +57,12 @@ def inference(text: str) -> str:
         logits = classifier.run(tensor_text)
         probas = F.softmax(logits, dim=1).cpu().numpy()
         pred_index = torch.argmax(logits, dim=1).cpu().numpy()[0]
-        confidence_score = probas[0][pred_index]
-        predicted_label = label_mapping[pred_index]
+        confidence_score = float(probas[0][pred_index])
+        predicted_intent = label_mapping[pred_index]
         
-        log_query_to_db(text, predicted_label, confidence_score)
+        log_query_to_db(text, predicted_intent, confidence_score)
         
-        print(f"Predicted_labe:, {predicted_label}", 
+        print(f"Predicted_labe:, {predicted_intent}", 
               f"confidence_score: {confidence_score}")
         
-        return predicted_label
-        
-        # return {"predicted_label": predicted_label,
-        #         "confidence_score": confidence_score}
+        return predicted_intent

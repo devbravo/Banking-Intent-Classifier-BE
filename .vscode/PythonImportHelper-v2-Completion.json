@@ -16,6 +16,22 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -125,15 +141,6 @@
         "documentation": {}
     },
     {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
-        "documentation": {}
-    },
-    {
         "label": "stopwords",
         "importPath": "nltk.corpus",
         "description": "nltk.corpus",
@@ -207,29 +214,20 @@
         "documentation": {}
     },
     {
-        "label": "uuid4",
-        "importPath": "uuid",
-        "description": "uuid",
+        "label": "os",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "uuid",
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
         "documentation": {}
     },
     {
-        "label": "datetime",
-        "kind": 6,
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
         "isExtraImport": true,
-        "importPath": "datetime",
-        "description": "datetime",
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "yaml",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "yaml",
-        "description": "yaml",
-        "detail": "yaml",
+        "detail": "dotenv",
         "documentation": {}
     },
     {
@@ -246,6 +244,15 @@
         "description": "pathlib",
         "isExtraImport": true,
         "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "yaml",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "yaml",
+        "description": "yaml",
+        "detail": "yaml",
         "documentation": {}
     },
     {
@@ -269,7 +276,7 @@
         "kind": 2,
         "importPath": "src.api.database",
         "description": "src.api.database",
-        "peekOfCode": "def log_query_to_db(query_text: str, predicted_intent: str, \n                    confidence_score: float = None, user_id=None):\n    \"\"\"\n    Log the user query and model prediction to the Supabase database\n    Args:\n        query_text (str): The user's query text.\n        predicted_intent (str): The predicted intent label.\n        confidence_score (float, optional): Prediction confidence score.\n        user_id (str, optional): The ID of the user (if available).\n    \"\"\"",
+        "peekOfCode": "def log_query_to_db(query_text: str, predicted_intent: str, \n                    confidence_score: float = None):\n    \"\"\"\n    Log the user query and model prediction to the Supabase database.\n    Args:\n        query_text (str): The user's query text.\n        predicted_intent (str): The predicted intent label.\n        confidence_score (float, optional): Prediction confidence score.\n    \"\"\"\n    supabase = get_supabase_client()",
         "detail": "src.api.database",
         "documentation": {}
     },
@@ -350,17 +357,8 @@
         "kind": 2,
         "importPath": "src.db.models",
         "description": "src.db.models",
-        "peekOfCode": "def insert_user_query(supabase: Client, query_text: str, predicted_intent: str,\n                      confidence_score: float = None, user_id=None):\n    \"\"\"\n    Insert a new user query into the database.\n    Args:\n        supabase (Client): The Supabase client instance.\n        query_text (str): The text of the user query.\n        predicted_intent (str): The predicted intent label.\n        confidence_score (float, optional): Prediction confidence score.\n        user_id (str, optional): The ID of the user (if available).",
+        "peekOfCode": "def insert_user_query(supabase: Client, query_text: str, predicted_intent: str,\n                      confidence_score: float, timestamp: str):\n    \"\"\"\n    Insert a new user query into the database.\n    Args:\n        supabase (Client): The Supabase client instance.\n        query_text (str): The text of the user query.\n        predicted_intent (str): The predicted intent label.\n        confidence_score (float, optional): Prediction confidence score.\n        user_id (str, optional): The ID of the user (if available).",
         "detail": "src.db.models",
-        "documentation": {}
-    },
-    {
-        "label": "load_db_config",
-        "kind": 2,
-        "importPath": "src.db.session",
-        "description": "src.db.session",
-        "peekOfCode": "def load_db_config():\n    \"\"\"\n    Load the database configuration from a YAML file.\n    \"\"\"\n    config_path = os.path.join(os.path.dirname(__file__),\n                               '../../config/db_config.yaml')\n    with open(config_path, 'r') as f:\n        return yaml.safe_load(f)\ndb_config = load_db_config()\nsupabase: Client = create_client(db_config['supabase_url'],",
-        "detail": "src.db.session",
         "documentation": {}
     },
     {
@@ -368,16 +366,7 @@
         "kind": 2,
         "importPath": "src.db.session",
         "description": "src.db.session",
-        "peekOfCode": "def get_supabase_client() -> Client:\n    \"\"\"\n    Returns the Supabase client for interacting with the database.\n    \"\"\"\n    return supabase",
-        "detail": "src.db.session",
-        "documentation": {}
-    },
-    {
-        "label": "db_config",
-        "kind": 5,
-        "importPath": "src.db.session",
-        "description": "src.db.session",
-        "peekOfCode": "db_config = load_db_config()\nsupabase: Client = create_client(db_config['supabase_url'],\n                                 db_config['supabase_key'])\ndef get_supabase_client() -> Client:\n    \"\"\"\n    Returns the Supabase client for interacting with the database.\n    \"\"\"\n    return supabase",
+        "peekOfCode": "def get_supabase_client() -> Client:\n    \"\"\"\n    Returns the Supabase client for interacting with the database.\n    \"\"\"\n    supabase_url = os.getenv(\"SUPABASE_URL\")\n    supabase_key = os.getenv(\"SUPABASE_KEY\")\n    if not supabase_url or not supabase_key:\n        raise ValueError(\"Supabase URL and API key must be set in the env\")\n    supabase: Client = create_client(supabase_url,\n                                     supabase_key)",
         "detail": "src.db.session",
         "documentation": {}
     },
@@ -413,7 +402,7 @@
         "kind": 2,
         "importPath": "src.utils.save_model_to_bento",
         "description": "src.utils.save_model_to_bento",
-        "peekOfCode": "def load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      \"\"\"\n    lstm_model = IntentClassifier(config).to(DEVICE)\n    lstm_model.load_state_dict(torch.load(model_file,\n                                          map_location=torch.device(DEVICE)))\n    bento_model = bentoml.pytorch.save_model('classifier', model=lstm_model)",
+        "peekOfCode": "def load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      \"\"\"\n    lstm_model = IntentClassifier(config).to(DEVICE)\n    lstm_model.load_state_dict(torch.load(model_file,\n                                          map_location=torch.device(DEVICE),\n                                          weights_only=True))",
         "detail": "src.utils.save_model_to_bento",
         "documentation": {}
     },

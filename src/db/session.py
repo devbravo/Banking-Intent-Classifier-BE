@@ -1,26 +1,20 @@
-from supabase import create_client, Client
-import yaml
 import os
+from supabase import create_client, Client
+from dotenv import load_dotenv
 
-
-def load_db_config():
-    """
-    Load the database configuration from a YAML file.
-    """
-    config_path = os.path.join(os.path.dirname(__file__),
-                               '../../config/db_config.yaml')
-    with open(config_path, 'r') as f:
-        return yaml.safe_load(f)
-           
-
-db_config = load_db_config()
-
-supabase: Client = create_client(db_config['supabase_url'],
-                                 db_config['supabase_key'])
+load_dotenv()
 
 
 def get_supabase_client() -> Client:
     """
     Returns the Supabase client for interacting with the database.
     """
+    supabase_url = os.getenv("SUPABASE_URL")
+    supabase_key = os.getenv("SUPABASE_KEY")
+    
+    if not supabase_url or not supabase_key:
+        raise ValueError("Supabase URL and API key must be set in the env")
+    
+    supabase: Client = create_client(supabase_url,
+                                     supabase_key)
     return supabase

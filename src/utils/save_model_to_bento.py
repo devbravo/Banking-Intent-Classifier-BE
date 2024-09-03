@@ -41,7 +41,9 @@ def load_model_and_save_to_bento(model_file: Path) -> None:
       """
     lstm_model = IntentClassifier(config).to(DEVICE)
     lstm_model.load_state_dict(torch.load(model_file,
-                                          map_location=torch.device(DEVICE)))
+                                          map_location=torch.device(DEVICE),
+                                          weights_only=True))
+    
     bento_model = bentoml.pytorch.save_model('classifier', model=lstm_model)
     print(f'Bento model tag = {bento_model.tag}')
     
