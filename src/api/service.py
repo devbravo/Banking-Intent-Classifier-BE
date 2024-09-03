@@ -26,6 +26,7 @@ from src.data_preprocessing.text_processing import clean_text, lemmatizer
 from src.data_preprocessing.text_processing import numericalize
 from src.utils.get_device import get_device
 from src.api.database import log_query_to_db, log_feedback_to_db
+from src.schemas.schemas import FeedbackModel, InferenceResponseModel 
 
 
 DEVICE = get_device()
@@ -38,8 +39,8 @@ classifier = bentoml.pytorch.get('classifier:latest').to_runner()
 svc = bentoml.Service('classifier', runners=[classifier])
 
 
-@svc.api(input=Text(), output=JSON())
-def inference(text: str) -> dict:
+@svc.api(input=Text(), output=JSON(pydantic_model=InferenceResponseModel))
+def inference(text: str) -> InferenceResponseModel:
     """
       Perform inference on input text to predict the customer's intent.
       Args:
@@ -61,7 +62,6 @@ def inference(text: str) -> dict:
         predicted_intent = label_mapping[pred_index]
         
         query_id = log_query_to_db(text, predicted_intent, confidence_score)
-        # print("Query_id", query_id)
         
         print(f"Predicted_labe:, {predicted_intent}", 
               f"confidence_score: {confidence_score}")
@@ -71,10 +71,10 @@ def inference(text: str) -> dict:
             "confidence_score": confidence_score,
             "query_id": query_id
         }
-      
+              
 
-@svc.api(input=JSON(), output=JSON())
-def submit_feedback(feedback_data: dict) -> dict:
+@svc.api(input=JSON(pydantic_model=FeedbackModel), output=JSON())
+def submit_feedback(feedback_data: FeedbackModel) -> dict:
     """
     Submit feedback about the prediction.
 

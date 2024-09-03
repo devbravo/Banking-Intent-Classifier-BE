@@ -1,6 +1,6 @@
 """
-This module defines the IntentClassifier class, which is a 
-Bidirectional LSTM-based neural network model designed for 
+This module defines the IntentClassifier class and model architecture, 
+which is a Bidirectional LSTM-based neural network model designed for 
 intent detection in text. The model uses a series of LSTM layers 
 and linear layers with GELU activations and dropout for regularization.
 The model configuration can be customized via the LSTMConfig and 
