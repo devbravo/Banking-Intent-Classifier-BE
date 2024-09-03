@@ -1,0 +1,15 @@
+service: 'service.py:svc'
+name: 'intent-classification'
+labels:
+  owner: ZennoAI
+  project: gallery
+include:
+- '*.py'
+- '*.pt'
+- '*.json'
+- 'nltk_data'
+python:
+  requirements_txt: './requirements.txt'
+models: 
+- 'classifier:latest'
+- tag: 'classifier:mnxlqfxttgcsdytg'

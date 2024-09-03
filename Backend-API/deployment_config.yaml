@@ -1,0 +1,12 @@
+api_version: v1
+name: intent_classifier_api
+operator:
+  name: google-cloud-run
+template: terraform
+spec:
+  project_id: ic12
+  region: us-east4
+  port: 3000
+  max_instances: 1
+  memory: '512'
+  cpu: 1
