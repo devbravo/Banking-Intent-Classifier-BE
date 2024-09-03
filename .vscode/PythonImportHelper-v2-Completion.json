@@ -16,6 +16,14 @@
         "documentation": {}
     },
     {
+        "label": "insert_feedback",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -84,6 +92,14 @@
         "documentation": {}
     },
     {
+        "label": "JSON",
+        "importPath": "bentoml.io",
+        "description": "bentoml.io",
+        "isExtraImport": true,
+        "detail": "bentoml.io",
+        "documentation": {}
+    },
+    {
         "label": "label_mapping",
         "importPath": "src.utils.label_mapping",
         "description": "src.utils.label_mapping",
@@ -129,6 +145,30 @@
         "description": "src.api.database",
         "isExtraImport": true,
         "detail": "src.api.database",
+        "documentation": {}
+    },
+    {
+        "label": "log_feedback_to_db",
+        "importPath": "src.api.database",
+        "description": "src.api.database",
+        "isExtraImport": true,
+        "detail": "src.api.database",
+        "documentation": {}
+    },
+    {
+        "label": "FeedbackModel",
+        "importPath": "src.schemas.schemas",
+        "description": "src.schemas.schemas",
+        "isExtraImport": true,
+        "detail": "src.schemas.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "InferenceResponseModel",
+        "importPath": "src.schemas.schemas",
+        "description": "src.schemas.schemas",
+        "isExtraImport": true,
+        "detail": "src.schemas.schemas",
         "documentation": {}
     },
     {
@@ -239,6 +279,38 @@
         "documentation": {}
     },
     {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "field_validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "Path",
         "importPath": "pathlib",
         "description": "pathlib",
@@ -281,11 +353,29 @@
         "documentation": {}
     },
     {
+        "label": "log_feedback_to_db",
+        "kind": 2,
+        "importPath": "src.api.database",
+        "description": "src.api.database",
+        "peekOfCode": "def log_feedback_to_db(query_id: int, is_correct: bool, \n                       corrected_intent: str = None):\n    \"\"\"\n    Log feedback about the prediction to the Supabase database.\n    Args:\n        query_id (int): The ID of the user query being referenced.\n        is_correct (bool): Whether the prediction was correct.\n        corrected_intent (str, optional): The corrected intent if the \n                                          prediction was incorrect.\n    \"\"\"",
+        "detail": "src.api.database",
+        "documentation": {}
+    },
+    {
         "label": "inference",
         "kind": 2,
         "importPath": "src.api.service",
         "description": "src.api.service",
-        "peekOfCode": "def inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.\n    \"\"\"\n    cleaned_text = clean_text(text)",
+        "peekOfCode": "def inference(text: str) -> InferenceResponseModel:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.\n    \"\"\"\n    cleaned_text = clean_text(text)",
+        "detail": "src.api.service",
+        "documentation": {}
+    },
+    {
+        "label": "submit_feedback",
+        "kind": 2,
+        "importPath": "src.api.service",
+        "description": "src.api.service",
+        "peekOfCode": "def submit_feedback(feedback_data: FeedbackModel) -> dict:\n    \"\"\"\n    Submit feedback about the prediction.\n    Args:\n        feedback_data (dict): A dictionary containing feedback information. \n        Expected keys:\n            - query_id (int): The ID of the user query.\n            - is_correct (bool): Whether the prediction was correct.\n            - corrected_intent (str, optional): The corrected intent if the \n                                                prediction was incorrect.",
         "detail": "src.api.service",
         "documentation": {}
     },
@@ -294,7 +384,7 @@
         "kind": 5,
         "importPath": "src.api.service",
         "description": "src.api.service",
-        "peekOfCode": "DEVICE = get_device()\nprint(f\"Using device: {DEVICE}\")\nwith open('data/vocab.json', 'r', encoding='utf-8') as f:\n    vocab = json.load(f)\nclassifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.",
+        "peekOfCode": "DEVICE = get_device()\nprint(f\"Using device: {DEVICE}\")\nwith open('data/vocab.json', 'r', encoding='utf-8') as f:\n    vocab = json.load(f)\nclassifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=JSON(pydantic_model=InferenceResponseModel))\ndef inference(text: str) -> InferenceResponseModel:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.",
         "detail": "src.api.service",
         "documentation": {}
     },
@@ -303,7 +393,7 @@
         "kind": 5,
         "importPath": "src.api.service",
         "description": "src.api.service",
-        "peekOfCode": "classifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:",
+        "peekOfCode": "classifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=JSON(pydantic_model=InferenceResponseModel))\ndef inference(text: str) -> InferenceResponseModel:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:",
         "detail": "src.api.service",
         "documentation": {}
     },
@@ -312,7 +402,7 @@
         "kind": 5,
         "importPath": "src.api.service",
         "description": "src.api.service",
-        "peekOfCode": "svc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.",
+        "peekOfCode": "svc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=JSON(pydantic_model=InferenceResponseModel))\ndef inference(text: str) -> InferenceResponseModel:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.",
         "detail": "src.api.service",
         "documentation": {}
     },
@@ -357,7 +447,16 @@
         "kind": 2,
         "importPath": "src.db.models",
         "description": "src.db.models",
-        "peekOfCode": "def insert_user_query(supabase: Client, query_text: str, predicted_intent: str,\n                      confidence_score: float, timestamp: str):\n    \"\"\"\n    Insert a new user query into the database.\n    Args:\n        supabase (Client): The Supabase client instance.\n        query_text (str): The text of the user query.\n        predicted_intent (str): The predicted intent label.\n        confidence_score (float, optional): Prediction confidence score.\n        user_id (str, optional): The ID of the user (if available).",
+        "peekOfCode": "def insert_user_query(supabase: Client, query_text: str, predicted_intent: str,\n                      confidence_score: float, created_at: str):\n    \"\"\"\n    Insert a new user query into the database.\n    Args:\n        supabase (Client): The Supabase client instance.\n        query_text (str): The text of the user query.\n        predicted_intent (str): The predicted intent label.\n        confidence_score (float, optional): Prediction confidence score.\n        created_at (str, optional): The timestamp when the query was \\",
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "insert_feedback",
+        "kind": 2,
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "peekOfCode": "def insert_feedback(supabase: Client, query_id: int, is_correct: bool,\n                    corrected_intent: str = None, created_at: str = None):\n    \"\"\"\n    Insert feedback into the feedback table.\n    Args:\n        supabase (Client): The Supabase client instance.\n        query_id (int): The ID of the query in the user_queries table.\n        is_correct (bool): Whether the prediction was correct.\n        corrected_intent (str, optional): Corrected intent if incorrect \\\n                                          prediction.",
         "detail": "src.db.models",
         "documentation": {}
     },
@@ -377,6 +476,24 @@
         "description": "src.models.intent_classifier",
         "peekOfCode": "class IntentClassifier(nn.Module):\n    \"\"\"\n    A Bidirectional LSTM-based classifier for intent detection. This model \n    consists of an embedding layer, a bidirectional LSTM, and multiple \n    linear layers with GELU activation functions and dropout for \n    regularization.\n    Args:\n        config (dict): Configuration dictionary containing model parameters \n        such as:\n            - 'input_size' (int): Size of the input feature vector.",
         "detail": "src.models.intent_classifier",
+        "documentation": {}
+    },
+    {
+        "label": "FeedbackModel",
+        "kind": 6,
+        "importPath": "src.schemas.schemas",
+        "description": "src.schemas.schemas",
+        "peekOfCode": "class FeedbackModel(BaseModel):\n    query_id: int = Field(..., ge=1)\n    is_correct: bool \n    corrected_intent: Optional[str] = Field(None, max_length=100)\n    @field_validator('corrected_intent', always=True)\n    def check_corrected_intent(cls, v, values): \n        if not values['is_correct'] and not v: \n            raise ValueError('corrected_intent is required \\\n                              when is_correct is False')\n        return v ",
+        "detail": "src.schemas.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "InferenceResponseModel",
+        "kind": 6,
+        "importPath": "src.schemas.schemas",
+        "description": "src.schemas.schemas",
+        "peekOfCode": "class InferenceResponseModel(BaseModel):\n    predicted_intent: str\n    confidence_score: float\n    query_id: int",
+        "detail": "src.schemas.schemas",
         "documentation": {}
     },
     {
