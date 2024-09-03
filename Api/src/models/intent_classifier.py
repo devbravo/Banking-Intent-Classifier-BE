@@ -1,17 +1,33 @@
-import torch 
-import torch.nn as nn 
-import torch.nn.init as init
-import os
+"""
+This module defines the IntentClassifier class, which is a Bidirectional LSTM-based
+neural network model designed for intent detection in text. The model uses a series 
+of LSTM layers and linear layers with GELU activations and dropout for regularization.
+The model configuration can be customized via the LSTMConfig and LinearConfig classes.
+"""
 
-current_dir = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(current_dir, './data/embedding_matrix.pt')
-embedding_matrix = torch.load(file_path)
+import torch
+from torch import nn
+from torch.nn import init
 
 class IntentClassifier(nn.Module):
+    """
+    A Bidirectional LSTM-based classifier for intent detection. This model 
+    consists of an embedding layer, a bidirectional LSTM, and multiple 
+    linear layers with GELU activation functions and dropout for regularization.
+
+    Args:
+        config (dict): Configuration dictionary containing model parameters such as:
+            - 'input_size' (int): Size of the input feature vector.
+            - 'hidden_size' (int): Number of features in the hidden state of the LSTM.
+            - 'num_layers' (int): Number of recurrent layers in the LSTM.
+            - 'dropout_lstm' (float): Dropout probability for the LSTM layers.
+            - 'dropout_linear' (float): Dropout probability for the linear layers.
+            - 'num_labels' (int): Number of output classes for the classification.
+    """
     def __init__(self, config: dict):
         super().__init__()
         self.config = config
-        self.embedding = nn.Embedding.from_pretrained(embedding_matrix, freeze=True)
+        self.embedding = nn.Embedding.from_pretrained('/data/embedding_matrix.pt', freeze=True)
 
         self.bi_lstm = nn.LSTM(config['input_size'], config['hidden_size'],
                              config['num_layers'], dropout=config['dropout_lstm'],
@@ -41,30 +57,39 @@ class IntentClassifier(nn.Module):
 
 
     def forward(self, x, h0=None, c0=None):
-      if h0 is None:
-          h0 = torch.zeros(self.config['num_layers'] * 2, x.size(0), self.config['hidden_size'])
-      if c0 is None:
-          c0 = torch.zeros(self.config['num_layers'] * 2, x.size(0), self.config['hidden_size'])
+        """
+        Forward pass of the model. Processes the input through the embedding layer, 
+        bidirectional LSTM, and a series of linear layers to produce class scores.
 
-      x = self.embedding(x)
+        Args:
+            x (torch.Tensor): Input tensor of shape (batch_size, sequence_length).
+            h0 (torch.Tensor, optional): Initial hidden state for the LSTM. 
+                Defaults to None, which initializes it as zeros.
+            c0 (torch.Tensor, optional): Initial cell state for the LSTM. 
+                Defaults to None, which initializes it as zeros.
 
-      x, _ = self.bi_lstm(x, (h0, c0))
-      x = self.act1(self.dropout_bilstm(x))
+        Returns:
+            torch.Tensor: Output tensor of shape (batch_size, num_labels) containing 
+            the class scores for each input sequence in the batch.
+        """
+        if h0 is None:
+            h0 = torch.zeros(self.config['num_layers'] * 2, x.size(0), self.config['hidden_size'])
+        if c0 is None:
+            c0 = torch.zeros(self.config['num_layers'] * 2, x.size(0), self.config['hidden_size'])
 
-      x = self.linear1(x[:, -1, :])
-      x = self.norm1(x)
-      x = self.act_lin1(self.dropout_linear1(x))
+        x = self.embedding(x)
 
-      x = self.linear2(x)
-      x = self.norm2(x)
-      x = self.act_lin2(self.dropout_linear2(x))
+        x, _ = self.bi_lstm(x, (h0, c0))
+        x = self.act1(self.dropout_bilstm(x))
 
-      x = self.output(x)
+        x = self.linear1(x[:, -1, :])
+        x = self.norm1(x)
+        x = self.act_lin1(self.dropout_linear1(x))
 
-      return x
+        x = self.linear2(x)
+        x = self.norm2(x)
+        x = self.act_lin2(self.dropout_linear2(x))
 
+        x = self.output(x)
 
-
-    
-    
-    
+        return x

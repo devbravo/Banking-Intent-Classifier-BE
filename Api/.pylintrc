@@ -1,0 +1,4 @@
+[TYPECHECK]
+ignored-modules=torch
+[DESIGN]
+max-attributes=14
