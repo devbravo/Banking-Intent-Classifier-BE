@@ -1,5 +1,21 @@
 [
     {
+        "label": "get_supabase_client",
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "isExtraImport": true,
+        "detail": "src.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "insert_user_query",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -23,6 +39,15 @@
         "description": "torch",
         "isExtraImport": true,
         "detail": "torch",
+        "documentation": {}
+    },
+    {
+        "label": "torch.nn.functional",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch.nn.functional",
+        "description": "torch.nn.functional",
+        "detail": "torch.nn.functional",
         "documentation": {}
     },
     {
@@ -80,6 +105,14 @@
         "description": "src.utils.get_device",
         "isExtraImport": true,
         "detail": "src.utils.get_device",
+        "documentation": {}
+    },
+    {
+        "label": "log_query_to_db",
+        "importPath": "src.api.database",
+        "description": "src.api.database",
+        "isExtraImport": true,
+        "detail": "src.api.database",
         "documentation": {}
     },
     {
@@ -150,6 +183,56 @@
         "documentation": {}
     },
     {
+        "label": "Client",
+        "importPath": "supabase",
+        "description": "supabase",
+        "isExtraImport": true,
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "create_client",
+        "importPath": "supabase",
+        "description": "supabase",
+        "isExtraImport": true,
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "Client",
+        "importPath": "supabase",
+        "description": "supabase",
+        "isExtraImport": true,
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "uuid4",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "yaml",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "yaml",
+        "description": "yaml",
+        "detail": "yaml",
+        "documentation": {}
+    },
+    {
         "label": "init",
         "importPath": "torch.nn",
         "description": "torch.nn",
@@ -163,15 +246,6 @@
         "description": "pathlib",
         "isExtraImport": true,
         "detail": "pathlib",
-        "documentation": {}
-    },
-    {
-        "label": "yaml",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "yaml",
-        "description": "yaml",
-        "detail": "yaml",
         "documentation": {}
     },
     {
@@ -191,164 +265,165 @@
         "documentation": {}
     },
     {
-        "label": "streamlit",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "streamlit",
-        "description": "streamlit",
-        "detail": "streamlit",
-        "documentation": {}
-    },
-    {
-        "label": "requests",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "requests",
-        "description": "requests",
-        "detail": "requests",
-        "documentation": {}
-    },
-    {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
+        "label": "log_query_to_db",
+        "kind": 2,
+        "importPath": "src.api.database",
+        "description": "src.api.database",
+        "peekOfCode": "def log_query_to_db(query_text: str, predicted_intent: str, \n                    confidence_score: float = None, user_id=None):\n    \"\"\"\n    Log the user query and model prediction to the Supabase database\n    Args:\n        query_text (str): The user's query text.\n        predicted_intent (str): The predicted intent label.\n        confidence_score (float, optional): Prediction confidence score.\n        user_id (str, optional): The ID of the user (if available).\n    \"\"\"",
+        "detail": "src.api.database",
         "documentation": {}
     },
     {
         "label": "inference",
         "kind": 2,
-        "importPath": "Backend-API.src.api.service",
-        "description": "Backend-API.src.api.service",
+        "importPath": "src.api.service",
+        "description": "src.api.service",
         "peekOfCode": "def inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.\n    \"\"\"\n    cleaned_text = clean_text(text)",
-        "detail": "Backend-API.src.api.service",
+        "detail": "src.api.service",
         "documentation": {}
     },
     {
         "label": "DEVICE",
         "kind": 5,
-        "importPath": "Backend-API.src.api.service",
-        "description": "Backend-API.src.api.service",
+        "importPath": "src.api.service",
+        "description": "src.api.service",
         "peekOfCode": "DEVICE = get_device()\nprint(f\"Using device: {DEVICE}\")\nwith open('data/vocab.json', 'r', encoding='utf-8') as f:\n    vocab = json.load(f)\nclassifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.",
-        "detail": "Backend-API.src.api.service",
+        "detail": "src.api.service",
         "documentation": {}
     },
     {
         "label": "classifier",
         "kind": 5,
-        "importPath": "Backend-API.src.api.service",
-        "description": "Backend-API.src.api.service",
+        "importPath": "src.api.service",
+        "description": "src.api.service",
         "peekOfCode": "classifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:",
-        "detail": "Backend-API.src.api.service",
+        "detail": "src.api.service",
         "documentation": {}
     },
     {
         "label": "svc",
         "kind": 5,
-        "importPath": "Backend-API.src.api.service",
-        "description": "Backend-API.src.api.service",
+        "importPath": "src.api.service",
+        "description": "src.api.service",
         "peekOfCode": "svc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.",
-        "detail": "Backend-API.src.api.service",
+        "detail": "src.api.service",
         "documentation": {}
     },
     {
         "label": "clean_text",
         "kind": 2,
-        "importPath": "Backend-API.src.data_preprocessing.text_processing",
-        "description": "Backend-API.src.data_preprocessing.text_processing",
+        "importPath": "src.data_preprocessing.text_processing",
+        "description": "src.data_preprocessing.text_processing",
         "peekOfCode": "def clean_text(text: str) -> str:\n    \"\"\"\n    Clean text data by removing punctuation, stopwords, \\\n           and converting to lowercase.\n    Args: text (str): Input text from the user to be cleaned.\n    Returns (str): cleaned text\n    \"\"\"\n    tokens = re.sub(r\"\\{\\{.*?\\}\\}\", \"\", text)\n    tokens = word_tokenize(tokens)\n    tokens = [w.lower() for w in tokens]",
-        "detail": "Backend-API.src.data_preprocessing.text_processing",
+        "detail": "src.data_preprocessing.text_processing",
         "documentation": {}
     },
     {
         "label": "nltk_to_wordnet_pos",
         "kind": 2,
-        "importPath": "Backend-API.src.data_preprocessing.text_processing",
-        "description": "Backend-API.src.data_preprocessing.text_processing",
+        "importPath": "src.data_preprocessing.text_processing",
+        "description": "src.data_preprocessing.text_processing",
         "peekOfCode": "def nltk_to_wordnet_pos(nltk_tag: str) -> str:\n    \"\"\"\n    Converts an NLTK POS (part-of-speech) tag to a\n    corresponding WordNet POS tag.\n    This conversion is useful for lemmatization tasks where WordNet requires \n    specific POS tags.\n    Args:\n        nltk_tag (str): The POS tag generated by NLTK's `pos_tag` function.\n    Returns:\n        str or None: The corresponding WordNet POS tag (`wordnet.ADJ`,",
-        "detail": "Backend-API.src.data_preprocessing.text_processing",
+        "detail": "src.data_preprocessing.text_processing",
         "documentation": {}
     },
     {
         "label": "lemmatizer",
         "kind": 2,
-        "importPath": "Backend-API.src.data_preprocessing.text_processing",
-        "description": "Backend-API.src.data_preprocessing.text_processing",
+        "importPath": "src.data_preprocessing.text_processing",
+        "description": "src.data_preprocessing.text_processing",
         "peekOfCode": "def lemmatizer(data: str) -> list[str]:\n    \"\"\"\n    Lemmatizes the input text data by converting words to their base\n    or dictionary form using NLTK's WordNetLemmatizer.\n    The function first tokenizes the input text, assigns \n    part-of-speech (POS) tags, and then lemmatizes each word \n    based on its POS tag.\n    Args:\n        data (str): The input text to be lemmatized.\n    Returns:",
-        "detail": "Backend-API.src.data_preprocessing.text_processing",
+        "detail": "src.data_preprocessing.text_processing",
         "documentation": {}
     },
     {
         "label": "numericalize",
         "kind": 2,
-        "importPath": "Backend-API.src.data_preprocessing.text_processing",
-        "description": "Backend-API.src.data_preprocessing.text_processing",
+        "importPath": "src.data_preprocessing.text_processing",
+        "description": "src.data_preprocessing.text_processing",
         "peekOfCode": "def numericalize(vocab: dict[str, int], data: list[str]) -> list[list[int]]:\n    \"\"\"\n    Converts tokens into their corresponding numerical indices\n    based on a given vocabulary. If a token is not found in the vocabulary,\n    a special '<UNK>' token is used.\n    Args:\n        vocab (dict): A dictionary mapping tokens (words) to their\n                      corresponding numerical indices.\n        data (list): A list of tokens (words) to be converted into numerical\n                     indices.",
-        "detail": "Backend-API.src.data_preprocessing.text_processing",
+        "detail": "src.data_preprocessing.text_processing",
+        "documentation": {}
+    },
+    {
+        "label": "insert_user_query",
+        "kind": 2,
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "peekOfCode": "def insert_user_query(supabase: Client, query_text: str, predicted_intent: str,\n                      confidence_score: float = None, user_id=None):\n    \"\"\"\n    Insert a new user query into the database.\n    Args:\n        supabase (Client): The Supabase client instance.\n        query_text (str): The text of the user query.\n        predicted_intent (str): The predicted intent label.\n        confidence_score (float, optional): Prediction confidence score.\n        user_id (str, optional): The ID of the user (if available).",
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "load_db_config",
+        "kind": 2,
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "peekOfCode": "def load_db_config():\n    \"\"\"\n    Load the database configuration from a YAML file.\n    \"\"\"\n    config_path = os.path.join(os.path.dirname(__file__),\n                               '../../config/db_config.yaml')\n    with open(config_path, 'r') as f:\n        return yaml.safe_load(f)\ndb_config = load_db_config()\nsupabase: Client = create_client(db_config['supabase_url'],",
+        "detail": "src.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "get_supabase_client",
+        "kind": 2,
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "peekOfCode": "def get_supabase_client() -> Client:\n    \"\"\"\n    Returns the Supabase client for interacting with the database.\n    \"\"\"\n    return supabase",
+        "detail": "src.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "db_config",
+        "kind": 5,
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "peekOfCode": "db_config = load_db_config()\nsupabase: Client = create_client(db_config['supabase_url'],\n                                 db_config['supabase_key'])\ndef get_supabase_client() -> Client:\n    \"\"\"\n    Returns the Supabase client for interacting with the database.\n    \"\"\"\n    return supabase",
+        "detail": "src.db.session",
         "documentation": {}
     },
     {
         "label": "IntentClassifier",
         "kind": 6,
-        "importPath": "Backend-API.src.models.intent_classifier",
-        "description": "Backend-API.src.models.intent_classifier",
-        "peekOfCode": "class IntentClassifier(nn.Module):\n    \"\"\"\n    A Bidirectional LSTM-based classifier for intent detection. This model \n    consists of an embedding layer, a bidirectional LSTM, and multiple \n    linear layers with GELU activation functions and dropout for regularization.\n    Args:\n        config (dict): Configuration dictionary containing model parameters such as:\n            - 'input_size' (int): Size of the input feature vector.\n            - 'hidden_size' (int): Number of features in the hidden state of the LSTM.\n            - 'num_layers' (int): Number of recurrent layers in the LSTM.",
-        "detail": "Backend-API.src.models.intent_classifier",
+        "importPath": "src.models.intent_classifier",
+        "description": "src.models.intent_classifier",
+        "peekOfCode": "class IntentClassifier(nn.Module):\n    \"\"\"\n    A Bidirectional LSTM-based classifier for intent detection. This model \n    consists of an embedding layer, a bidirectional LSTM, and multiple \n    linear layers with GELU activation functions and dropout for \n    regularization.\n    Args:\n        config (dict): Configuration dictionary containing model parameters \n        such as:\n            - 'input_size' (int): Size of the input feature vector.",
+        "detail": "src.models.intent_classifier",
         "documentation": {}
     },
     {
         "label": "get_device",
         "kind": 2,
-        "importPath": "Backend-API.src.utils.get_device",
-        "description": "Backend-API.src.utils.get_device",
+        "importPath": "src.utils.get_device",
+        "description": "src.utils.get_device",
         "peekOfCode": "def get_device() -> str:\n    \"\"\"\n    Determines the appropriate device to use for PyTorch operations.\n    Returns:\n        str: 'cuda' if a GPU is available, 'mps' if an Apple M1/M2 GPU is \n              available, otherwise 'cpu'.\n    \"\"\"\n    if torch.cuda.is_available():\n        return 'cuda'\n    elif torch.backends.mps.is_available():",
-        "detail": "Backend-API.src.utils.get_device",
+        "detail": "src.utils.get_device",
         "documentation": {}
     },
     {
         "label": "label_mapping",
         "kind": 5,
-        "importPath": "Backend-API.src.utils.label_mapping",
-        "description": "Backend-API.src.utils.label_mapping",
+        "importPath": "src.utils.label_mapping",
+        "description": "src.utils.label_mapping",
         "peekOfCode": "label_mapping = {\n    0: 'activate_my_card',\n    1: 'age_limit',\n    2: 'apple_pay_or_google_pay',\n    3: 'atm_support',\n    4: 'automatic_top_up',\n    5: 'balance_not_updated_after_bank_transfer',\n    6: 'balance_not_updated_after_cheque_or_cash_deposit',\n    7: 'beneficiary_not_allowed',\n    8: 'cancel_transfer',",
-        "detail": "Backend-API.src.utils.label_mapping",
+        "detail": "src.utils.label_mapping",
         "documentation": {}
     },
     {
         "label": "load_model_and_save_to_bento",
         "kind": 2,
-        "importPath": "Backend-API.src.utils.save_model_to_bento",
-        "description": "Backend-API.src.utils.save_model_to_bento",
+        "importPath": "src.utils.save_model_to_bento",
+        "description": "src.utils.save_model_to_bento",
         "peekOfCode": "def load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      \"\"\"\n    lstm_model = IntentClassifier(config).to(DEVICE)\n    lstm_model.load_state_dict(torch.load(model_file,\n                                          map_location=torch.device(DEVICE)))\n    bento_model = bentoml.pytorch.save_model('classifier', model=lstm_model)",
-        "detail": "Backend-API.src.utils.save_model_to_bento",
+        "detail": "src.utils.save_model_to_bento",
         "documentation": {}
     },
     {
         "label": "DEVICE",
         "kind": 5,
-        "importPath": "Backend-API.src.utils.save_model_to_bento",
-        "description": "Backend-API.src.utils.save_model_to_bento",
+        "importPath": "src.utils.save_model_to_bento",
+        "description": "src.utils.save_model_to_bento",
         "peekOfCode": "DEVICE = get_device()\nprint(f\"Using device: {DEVICE}\")\nwith open('../models/model_config.yaml', 'r', encoding='utf-8') as f:\n    config = yaml.safe_load(f)\ndef load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      \"\"\"",
-        "detail": "Backend-API.src.utils.save_model_to_bento",
-        "documentation": {}
-    },
-    {
-        "label": "classify_intent",
-        "kind": 2,
-        "importPath": "User Interface.src.app",
-        "description": "User Interface.src.app",
-        "peekOfCode": "def classify_intent(user_text):\n    try:\n        data = {'text': user_text}\n        response = requests.post(API_URL, json=data)\n        if response.status_code == 200:\n            classification = response.text\n            return classification\n        else:\n            return f'API error: {response.status_code}'\n    except Exception as e:",
-        "detail": "User Interface.src.app",
-        "documentation": {}
-    },
-    {
-        "label": "API_URL",
-        "kind": 5,
-        "importPath": "User Interface.src.app",
-        "description": "User Interface.src.app",
-        "peekOfCode": "API_URL = os.getenv('API_URL')\n@st.cache_data()\ndef classify_intent(user_text):\n    try:\n        data = {'text': user_text}\n        response = requests.post(API_URL, json=data)\n        if response.status_code == 200:\n            classification = response.text\n            return classification\n        else:",
-        "detail": "User Interface.src.app",
+        "detail": "src.utils.save_model_to_bento",
         "documentation": {}
     }
 ]

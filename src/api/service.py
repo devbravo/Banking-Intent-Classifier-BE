@@ -18,12 +18,14 @@ The inference function performs the following steps:
 
 import json
 import torch
+import torch.nn.functional as F
 import bentoml
 from bentoml.io import Text
 from src.utils.label_mapping import label_mapping
 from src.data_preprocessing.text_processing import clean_text, lemmatizer
 from src.data_preprocessing.text_processing import numericalize
 from src.utils.get_device import get_device
+from src.api.database import log_query_to_db
 
 
 DEVICE = get_device()
@@ -50,9 +52,20 @@ def inference(text: str) -> str:
     lemmatized_text = lemmatizer(cleaned_text)
     numericalized_text = numericalize(vocab, lemmatized_text)
     tensor_text = torch.tensor(numericalized_text).to(DEVICE)
+    
     with torch.no_grad():
-        pred = classifier.run(tensor_text)
-        pred = torch.argmax(pred, dim=1).cpu().numpy()
-        predicted_label = label_mapping[pred[0]]
-        print("Predicted_label", predicted_label)
+        logits = classifier.run(tensor_text)
+        probas = F.softmax(logits, dim=1).cpu().numpy()
+        pred_index = torch.argmax(logits, dim=1).cpu().numpy()[0]
+        confidence_score = probas[0][pred_index]
+        predicted_label = label_mapping[pred_index]
+        
+        log_query_to_db(text, predicted_label, confidence_score)
+        
+        print(f"Predicted_labe:, {predicted_label}", 
+              f"confidence_score: {confidence_score}")
+        
         return predicted_label
+        
+        # return {"predicted_label": predicted_label,
+        #         "confidence_score": confidence_score}
