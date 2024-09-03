@@ -1,5 +1,88 @@
 [
     {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "torch",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch",
+        "description": "torch",
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
+        "label": "nn",
+        "importPath": "torch",
+        "description": "torch",
+        "isExtraImport": true,
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
+        "label": "bentoml",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "bentoml",
+        "description": "bentoml",
+        "detail": "bentoml",
+        "documentation": {}
+    },
+    {
+        "label": "Text",
+        "importPath": "bentoml.io",
+        "description": "bentoml.io",
+        "isExtraImport": true,
+        "detail": "bentoml.io",
+        "documentation": {}
+    },
+    {
+        "label": "label_mapping",
+        "importPath": "src.utils.label_mapping",
+        "description": "src.utils.label_mapping",
+        "isExtraImport": true,
+        "detail": "src.utils.label_mapping",
+        "documentation": {}
+    },
+    {
+        "label": "clean_text",
+        "importPath": "src.data_preprocessing.text_processing",
+        "description": "src.data_preprocessing.text_processing",
+        "isExtraImport": true,
+        "detail": "src.data_preprocessing.text_processing",
+        "documentation": {}
+    },
+    {
+        "label": "lemmatizer",
+        "importPath": "src.data_preprocessing.text_processing",
+        "description": "src.data_preprocessing.text_processing",
+        "isExtraImport": true,
+        "detail": "src.data_preprocessing.text_processing",
+        "documentation": {}
+    },
+    {
+        "label": "numericalize",
+        "importPath": "src.data_preprocessing.text_processing",
+        "description": "src.data_preprocessing.text_processing",
+        "isExtraImport": true,
+        "detail": "src.data_preprocessing.text_processing",
+        "documentation": {}
+    },
+    {
+        "label": "get_device",
+        "importPath": "src.utils.get_device",
+        "description": "src.utils.get_device",
+        "isExtraImport": true,
+        "detail": "src.utils.get_device",
+        "documentation": {}
+    },
+    {
         "label": "re",
         "kind": 6,
         "isExtraImport": true,
@@ -67,23 +150,6 @@
         "documentation": {}
     },
     {
-        "label": "torch",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "torch",
-        "description": "torch",
-        "detail": "torch",
-        "documentation": {}
-    },
-    {
-        "label": "nn",
-        "importPath": "torch",
-        "description": "torch",
-        "isExtraImport": true,
-        "detail": "torch",
-        "documentation": {}
-    },
-    {
         "label": "init",
         "importPath": "torch.nn",
         "description": "torch.nn",
@@ -97,15 +163,6 @@
         "description": "pathlib",
         "isExtraImport": true,
         "detail": "pathlib",
-        "documentation": {}
-    },
-    {
-        "label": "bentoml",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "bentoml",
-        "description": "bentoml",
-        "detail": "bentoml",
         "documentation": {}
     },
     {
@@ -134,60 +191,39 @@
         "documentation": {}
     },
     {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
+        "label": "inference",
+        "kind": 2,
+        "importPath": "src.api.service",
+        "description": "src.api.service",
+        "peekOfCode": "def inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.\n    \"\"\"\n    cleaned_text = clean_text(text)",
+        "detail": "src.api.service",
         "documentation": {}
     },
     {
-        "label": "Text",
-        "importPath": "bentoml.io",
-        "description": "bentoml.io",
-        "isExtraImport": true,
-        "detail": "bentoml.io",
+        "label": "DEVICE",
+        "kind": 5,
+        "importPath": "src.api.service",
+        "description": "src.api.service",
+        "peekOfCode": "DEVICE = get_device()\nprint(f\"Using device: {DEVICE}\")\nwith open('data/vocab.json', 'r', encoding='utf-8') as f:\n    vocab = json.load(f)\nclassifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.",
+        "detail": "src.api.service",
         "documentation": {}
     },
     {
-        "label": "label_mapping",
-        "importPath": "src.utils.label_mapping",
-        "description": "src.utils.label_mapping",
-        "isExtraImport": true,
-        "detail": "src.utils.label_mapping",
+        "label": "classifier",
+        "kind": 5,
+        "importPath": "src.api.service",
+        "description": "src.api.service",
+        "peekOfCode": "classifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:",
+        "detail": "src.api.service",
         "documentation": {}
     },
     {
-        "label": "clean_text",
-        "importPath": "src.data_preprocessing.text_processing",
-        "description": "src.data_preprocessing.text_processing",
-        "isExtraImport": true,
-        "detail": "src.data_preprocessing.text_processing",
-        "documentation": {}
-    },
-    {
-        "label": "lemmatizer",
-        "importPath": "src.data_preprocessing.text_processing",
-        "description": "src.data_preprocessing.text_processing",
-        "isExtraImport": true,
-        "detail": "src.data_preprocessing.text_processing",
-        "documentation": {}
-    },
-    {
-        "label": "numericalize",
-        "importPath": "src.data_preprocessing.text_processing",
-        "description": "src.data_preprocessing.text_processing",
-        "isExtraImport": true,
-        "detail": "src.data_preprocessing.text_processing",
-        "documentation": {}
-    },
-    {
-        "label": "get_device",
-        "importPath": "src.utils.get_device",
-        "description": "src.utils.get_device",
-        "isExtraImport": true,
-        "detail": "src.utils.get_device",
+        "label": "svc",
+        "kind": 5,
+        "importPath": "src.api.service",
+        "description": "src.api.service",
+        "peekOfCode": "svc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.",
+        "detail": "src.api.service",
         "documentation": {}
     },
     {
@@ -269,42 +305,6 @@
         "description": "src.utils.save_model_to_bento",
         "peekOfCode": "DEVICE = get_device()\nprint(f\"Using device: {DEVICE}\")\nwith open('../models/model_config.yaml', 'r', encoding='utf-8') as f:\n    config = yaml.safe_load(f)\ndef load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      \"\"\"",
         "detail": "src.utils.save_model_to_bento",
-        "documentation": {}
-    },
-    {
-        "label": "inference",
-        "kind": 2,
-        "importPath": "service",
-        "description": "service",
-        "peekOfCode": "def inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.\n    \"\"\"\n    cleaned_text = clean_text(text)",
-        "detail": "service",
-        "documentation": {}
-    },
-    {
-        "label": "DEVICE",
-        "kind": 5,
-        "importPath": "service",
-        "description": "service",
-        "peekOfCode": "DEVICE = get_device()\nprint(f\"Using device: {DEVICE}\")\nwith open('data/vocab.json', 'r', encoding='utf-8') as f:\n    vocab = json.load(f)\nclassifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.",
-        "detail": "service",
-        "documentation": {}
-    },
-    {
-        "label": "classifier",
-        "kind": 5,
-        "importPath": "service",
-        "description": "service",
-        "peekOfCode": "classifier = bentoml.pytorch.get('classifier:latest').to_runner()\nsvc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:",
-        "detail": "service",
-        "documentation": {}
-    },
-    {
-        "label": "svc",
-        "kind": 5,
-        "importPath": "service",
-        "description": "service",
-        "peekOfCode": "svc = bentoml.Service('classifier', runners=[classifier])\n@svc.api(input=Text(), output=Text())\ndef inference(text: str) -> str:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.",
-        "detail": "service",
         "documentation": {}
     }
 ]
