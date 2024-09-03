@@ -1,6 +1,0 @@
-input_size: 50
-num_layers: 2
-num_labels: 77
-hidden_size: 300
-dropout_lstm: 0.10
-dropout_linear: 0.20

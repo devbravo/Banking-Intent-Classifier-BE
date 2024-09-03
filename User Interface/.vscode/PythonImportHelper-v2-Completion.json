@@ -1,0 +1,55 @@
+[
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "classify_intent",
+        "kind": 2,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "def classify_intent(user_text):\n    try:\n        data = {'text': user_text}\n        response = requests.post(API_URL, json=data)\n        if response.status_code == 200:\n            classification = response.text\n            return classification\n        else:\n            return f'API error: {response.status_code}'\n    except Exception as e:",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "API_URL",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "API_URL = os.getenv('API_URL')\n@st.cache_data()\ndef classify_intent(user_text):\n    try:\n        data = {'text': user_text}\n        response = requests.post(API_URL, json=data)\n        if response.status_code == 200:\n            classification = response.text\n            return classification\n        else:",
+        "detail": "src.app",
+        "documentation": {}
+    }
+]
