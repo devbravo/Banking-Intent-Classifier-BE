@@ -1,5 +1,14 @@
 [
     {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
         "label": "get_supabase_client",
         "importPath": "src.db.session",
         "description": "src.db.session",
@@ -172,6 +181,38 @@
         "documentation": {}
     },
     {
+        "label": "ValidationError",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "field_validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
         "label": "re",
         "kind": 6,
         "isExtraImport": true,
@@ -311,30 +352,6 @@
         "documentation": {}
     },
     {
-        "label": "BaseModel",
-        "importPath": "pydantic",
-        "description": "pydantic",
-        "isExtraImport": true,
-        "detail": "pydantic",
-        "documentation": {}
-    },
-    {
-        "label": "Field",
-        "importPath": "pydantic",
-        "description": "pydantic",
-        "isExtraImport": true,
-        "detail": "pydantic",
-        "documentation": {}
-    },
-    {
-        "label": "field_validator",
-        "importPath": "pydantic",
-        "description": "pydantic",
-        "isExtraImport": true,
-        "detail": "pydantic",
-        "documentation": {}
-    },
-    {
         "label": "Path",
         "importPath": "pathlib",
         "description": "pathlib",
@@ -372,7 +389,7 @@
         "kind": 2,
         "importPath": "src.api.database",
         "description": "src.api.database",
-        "peekOfCode": "def log_query_to_db(query_text: str, predicted_intent: str, \n                    confidence_score: float = None):\n    \"\"\"\n    Log the user query and model prediction to the Supabase database.\n    Args:\n        query_text (str): The user's query text.\n        predicted_intent (str): The predicted intent label.\n        confidence_score (float, optional): Prediction confidence score.\n    \"\"\"\n    supabase = get_supabase_client()",
+        "peekOfCode": "def log_query_to_db(query_text: str, predicted_intent: str, \n                    confidence_score: float = None) -> int:\n    \"\"\"\n    Log the user query and model prediction to the Supabase database.\n    Args:\n        query_text (str): The user's query text.\n        predicted_intent (str): The predicted intent label.\n        confidence_score (float, optional): Prediction confidence score.\n    \"\"\"\n    supabase = get_supabase_client()",
         "detail": "src.api.database",
         "documentation": {}
     },
@@ -381,7 +398,16 @@
         "kind": 2,
         "importPath": "src.api.database",
         "description": "src.api.database",
-        "peekOfCode": "def log_feedback_to_db(query_id: int, is_correct: bool, \n                       corrected_intent: str = None):\n    \"\"\"\n    Log feedback about the prediction to the Supabase database.\n    Args:\n        query_id (int): The ID of the user query being referenced.\n        is_correct (bool): Whether the prediction was correct.\n        corrected_intent (str, optional): The corrected intent if the \n                                          prediction was incorrect.\n    \"\"\"",
+        "peekOfCode": "def log_feedback_to_db(query_id: int, is_correct: bool, \n                       corrected_intent: str = None) -> None:\n    \"\"\"\n    Log feedback about the prediction to the Supabase database.\n    Args:\n        query_id (int): The ID of the user query being referenced.\n        is_correct (bool): Whether the prediction was correct.\n        corrected_intent (str, optional): The corrected intent if the \n                                          prediction was incorrect.\n    \"\"\"",
+        "detail": "src.api.database",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "src.api.database",
+        "description": "src.api.database",
+        "peekOfCode": "logger = logging.getLogger(__name__)\ndef log_query_to_db(query_text: str, predicted_intent: str, \n                    confidence_score: float = None) -> int:\n    \"\"\"\n    Log the user query and model prediction to the Supabase database.\n    Args:\n        query_text (str): The user's query text.\n        predicted_intent (str): The predicted intent label.\n        confidence_score (float, optional): Prediction confidence score.\n    \"\"\"",
         "detail": "src.api.database",
         "documentation": {}
     },
@@ -390,7 +416,7 @@
         "kind": 2,
         "importPath": "src.api.service",
         "description": "src.api.service",
-        "peekOfCode": "def inference(text: str) -> InferenceResponseModel:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.\n    \"\"\"\n    cleaned_text = clean_text(text)",
+        "peekOfCode": "def inference(text: str) -> InferenceResponseModel:\n    \"\"\"\n      Perform inference on input text to predict the customer's intent.\n      Args:\n          text (str): Input text from the user for which the intent is to \\\n                      be predicted.\n      Returns:\n          str: The predicted label representing the customer's intent.\n    \"\"\"\n    try:",
         "detail": "src.api.service",
         "documentation": {}
     },
@@ -543,7 +569,7 @@
         "kind": 2,
         "importPath": "src.utils.save_model_to_bento",
         "description": "src.utils.save_model_to_bento",
-        "peekOfCode": "def load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      \"\"\"\n    lstm_model = IntentClassifier(config).to(DEVICE)\n    lstm_model.load_state_dict(torch.load(model_file,\n                                          map_location=torch.device(DEVICE),\n                                          weights_only=True))",
+        "peekOfCode": "def load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      Raises:\n        FileNotFoundError: If the model file is not found at the specified \n                           path.\n        RuntimeError: If there is an issue loading the model or saving it to \n                          BentoML.",
         "detail": "src.utils.save_model_to_bento",
         "documentation": {}
     },
@@ -552,7 +578,7 @@
         "kind": 5,
         "importPath": "src.utils.save_model_to_bento",
         "description": "src.utils.save_model_to_bento",
-        "peekOfCode": "DEVICE = get_device()\nprint(f\"Using device: {DEVICE}\")\nwith open('../models/model_config.yaml', 'r', encoding='utf-8') as f:\n    config = yaml.safe_load(f)\ndef load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      \"\"\"",
+        "peekOfCode": "DEVICE = get_device()\nprint(f\"Using device: {DEVICE}\")\nwith open('../models/model_config.yaml', 'r', encoding='utf-8') as f:\n    config = yaml.safe_load(f)\ndef load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      Raises:",
         "detail": "src.utils.save_model_to_bento",
         "documentation": {}
     }

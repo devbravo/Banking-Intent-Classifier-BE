@@ -1,10 +1,14 @@
+import logging
 from src.db.session import get_supabase_client
 from src.db.models import insert_user_query, insert_feedback
 from datetime import datetime, timezone
 
+logging.basicConfig(lefel=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 def log_query_to_db(query_text: str, predicted_intent: str, 
-                    confidence_score: float = None):
+                    confidence_score: float = None) -> int:
     """
     Log the user query and model prediction to the Supabase database.
     
@@ -18,15 +22,20 @@ def log_query_to_db(query_text: str, predicted_intent: str,
     try:
         result = insert_user_query(supabase, query_text, predicted_intent,
                                    confidence_score, created_at)
-        print(f"Logged to database: {result}")
+        logger.info(f'Logged to datavase: {result}')
         return result[0]['id']
+      
+    except (KeyError, IndexError) as e:
+        logger.error(f"Error accessing result ID: {e}")
+        raise
+      
     except Exception as e:
-        print(f"Error logging to database: {e}")
+        logger.error(f"Error logging to database: {e}")
         raise
       
       
 def log_feedback_to_db(query_id: int, is_correct: bool, 
-                       corrected_intent: str = None):
+                       corrected_intent: str = None) -> None:
     """
     Log feedback about the prediction to the Supabase database.
     
@@ -43,7 +52,7 @@ def log_feedback_to_db(query_id: int, is_correct: bool,
         result = insert_feedback(supabase, query_id, is_correct, 
                                  corrected_intent, created_at)
         
-        print(f"Feedback logged to database: {result}")
+        logger.info(f"Feedback logged to database: {result}")
     except Exception as e:
-        print(f"Error logging feedback to database: {e}")
+        logger.error(f"Error logging feedback to database: {e}")
         raise

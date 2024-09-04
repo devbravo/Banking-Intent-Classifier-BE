@@ -79,6 +79,9 @@ def nltk_to_wordnet_pos(nltk_tag: str) -> str:
                      `wordnet.VERB`, `wordnet.NOUN`, `wordnet.ADV`), or `None`
                      if the NLTK tag does not correspond to any of these.
     """
+    if not isinstance(nltk_tag, str) or not nltk_tag:
+        raise ValueError("Invalid NLTK tag: Expected a non-empty string.")
+      
     if nltk_tag.startswith('J'):
         return wordnet.ADJ
     elif nltk_tag.startswith('V'):
@@ -105,10 +108,16 @@ def lemmatizer(data: str) -> List[str]:
     Returns:
         list: A list of lemmatized words from the input text.
     """
-    wordnet_lem = WordNetLemmatizer()
-    tokens = word_tokenize(data)
-    pos_tags = pos_tag(tokens)
-
+    if not isinstance(data, str) or not data:
+        raise ValueError("Invalid input: Expected a non-empty string.")
+    
+    try:
+        wordnet_lem = WordNetLemmatizer()
+        tokens = word_tokenize(data)
+        pos_tags = pos_tag(tokens)
+    except Exception as e:
+        raise RuntimeError(f"Error during tokenization or POS tagging: {e}")
+    
     lemmatized_words = []
     for word, tag in pos_tags:
         wn_tag = nltk_to_wordnet_pos(tag)
@@ -137,6 +146,12 @@ def numericalize(vocab: Dict[str, int],
         List[List[int]]: A list containing a list of numerical indices 
                         representing the input text data.
     """
+    if not vocab or '<UNK>' not in vocab:
+        raise ValueError("Vocabulary is missing or '<UNK>' token not found.")
+
+    if not isinstance(data, list) or not data:
+        raise ValueError("Input data must be a non-empty list.")
+      
     indexed_data = []
     indexed_seq = [vocab.get(token, vocab['<UNK>']) for token in data]
     indexed_data.append(indexed_seq)

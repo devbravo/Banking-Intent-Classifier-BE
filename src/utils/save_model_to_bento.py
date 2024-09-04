@@ -35,17 +35,30 @@ with open('../models/model_config.yaml', 'r', encoding='utf-8') as f:
 def load_model_and_save_to_bento(model_file: Path) -> None:
     """
       Load a trained PyTorch model from a file and save it to BentoML.
-
       Args:
           model_file (Path): Path to the trained PyTorch model.
+      Raises:
+        FileNotFoundError: If the model file is not found at the specified 
+                           path.
+        RuntimeError: If there is an issue loading the model or saving it to 
+                          BentoML.
       """
-    lstm_model = IntentClassifier(config).to(DEVICE)
-    lstm_model.load_state_dict(torch.load(model_file,
-                                          map_location=torch.device(DEVICE),
-                                          weights_only=True))
-    
-    bento_model = bentoml.pytorch.save_model('classifier', model=lstm_model)
-    print(f'Bento model tag = {bento_model.tag}')
+    try:
+        lstm_model = IntentClassifier(config).to(DEVICE)
+        lstm_model.load_state_dict(torch.load(
+            model_file,
+            map_location=torch.device(DEVICE),
+            weights_only=True
+        ))
+    except (FileNotFoundError, RuntimeError, ValueError) as e:
+        raise RuntimeError(f"Failed to load model from {model_file}: {e}")
+      
+    try:
+        bento_model = bentoml.pytorch.save_model('classifier',
+                                                 model=lstm_model)
+        print(f'Bento model tag = {bento_model.tag}')
+    except Exception as e:
+        raise RuntimeError(f"Failed to save Bento model: {e}")
     
       
 if __name__ == '__main__':
