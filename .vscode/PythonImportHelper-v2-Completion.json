@@ -483,7 +483,7 @@
         "kind": 6,
         "importPath": "src.schemas.schemas",
         "description": "src.schemas.schemas",
-        "peekOfCode": "class FeedbackModel(BaseModel):\n    query_id: int = Field(..., ge=1)\n    is_correct: bool \n    corrected_intent: Optional[str] = Field(None, max_length=100)\n    @field_validator('corrected_intent', always=True)\n    def check_corrected_intent(cls, v, values): \n        if not values['is_correct'] and not v: \n            raise ValueError('corrected_intent is required \\\n                              when is_correct is False')\n        return v ",
+        "peekOfCode": "class FeedbackModel(BaseModel):\n    query_id: int = Field(..., ge=1)\n    is_correct: bool \n    corrected_intent: Optional[str] = Field(None, max_length=100)\n    @field_validator('corrected_intent', mode='before')\n    def check_corrected_intent(cls, v, info):\n        if info.data['is_correct'] is False and not v:\n            raise ValueError('corrected_intent is required \\\n                              when is_correct is False')\n        return v",
         "detail": "src.schemas.schemas",
         "documentation": {}
     },

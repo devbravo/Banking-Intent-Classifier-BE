@@ -7,12 +7,12 @@ class FeedbackModel(BaseModel):
     is_correct: bool 
     corrected_intent: Optional[str] = Field(None, max_length=100)
       
-    @field_validator('corrected_intent', always=True)
-    def check_corrected_intent(cls, v, values): 
-        if not values['is_correct'] and not v: 
+    @field_validator('corrected_intent', mode='before')
+    def check_corrected_intent(cls, v, info):
+        if info.data['is_correct'] is False and not v:
             raise ValueError('corrected_intent is required \
                               when is_correct is False')
-        return v 
+        return v
       
 
 class InferenceResponseModel(BaseModel):
