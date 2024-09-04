@@ -88,9 +88,9 @@ def submit_feedback(feedback_data: FeedbackModel) -> dict:
     Returns:
         dict: A confirmation message.
     """
-    query_id = feedback_data.get("query_id")
-    is_correct = feedback_data.get("is_correct")
-    corrected_intent = feedback_data.get("corrected_intent", None)
+    query_id = feedback_data.query_id
+    is_correct = feedback_data.is_correct
+    corrected_intent = feedback_data.corrected_intent
 
     if not query_id:
         return {"error": "Query ID is missing."}, 400
