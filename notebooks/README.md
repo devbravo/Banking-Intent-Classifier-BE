@@ -18,5 +18,7 @@ This notebook focuses on building and training a deep learning model to classify
 	•	Evaluate the model using accuracy and classification reports on the test dataset.
 
   **Key Findings**
-  - The model achieved a accury of 85% 
+  - Data augmentation techniques helped in increasing from initial accuracty of 60%
+  - Handling class imbalance improved accuracy, F1, Recall, and precision on most classes
+  - The model achieved a final accuracy of 85% 
   - To Improve model accuracy and accuracy on certain classes more training data is needed
