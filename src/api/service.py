@@ -69,9 +69,6 @@ def inference(text: str) -> InferenceResponseModel:
             query_id = log_query_to_db(text, predicted_intent, 
                                        confidence_score)
             
-            print(f"Predicted_labe:, {predicted_intent}", 
-                  f"confidence_score: {confidence_score}")
-            
             return {
                 "predicted_intent": predicted_intent,
                 "confidence_score": confidence_score,

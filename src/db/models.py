@@ -25,12 +25,14 @@ def insert_user_query(supabase: Client, query_text: str, predicted_intent: str,
     }
     
     try:
-        response = supabase.table("user_queries").insert(data).execute()      
-        if response.status_code != 201:
-            status_code = response.status_code
-            error_details = response.model_dump_json()
+        response = supabase.table("user_queries").insert(data).execute()    
+        if response.data:
+            return response.data
+          
+        if response.code != 201:
+            error_details = response.message
             raise Exception(
-              f"Failed to insert user query: {status_code} - {error_details}")
+              f"Failed to insert user query: {error_details}")
         return response.data
   
     except Exception as e:
@@ -64,11 +66,13 @@ def insert_feedback(supabase: Client, query_id: int, is_correct: bool,
     }
     try:
         response = supabase.table("feedback").insert(data).execute()
-        if response.status_code != 201:
-            status_code = response.status_code
-            error_details = response.model_dump_json()
+        if response.data:
+            return response.data
+          
+        if response.code != 201:
+            error_details = response.message
             raise Exception(
-              f"Failed to insert feedback: {status_code} - {error_details}")
+              f"Failed to insert feedback: {error_details}")
         return response.data
 
     except Exception as e:
