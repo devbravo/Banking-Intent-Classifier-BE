@@ -7,6 +7,7 @@ This project aims to develop a customer intent classification model for the bank
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [API Endpoints](#api-endpoints)
 - [Usage](#usage)
 - [Dataset](#dataset)
 - [Deployment](#deployment)
@@ -79,6 +80,78 @@ Customer service plays a crucial role in the banking industry, and efficiently c
     ```
 
 5. **Access the Streamlit frontend** by navigating to `http://localhost:8080` in your web browser.
+
+
+## API Endpoints
+
+The project provides two main API endpoints, which are built using BentoML and exposed for inference and feedback functionality.
+
+1. /inference
+
+	•	Description: This endpoint performs text inference, predicting the intent behind a customer’s query.
+	•	Method: POST
+	•	Endpoint URL: /inference
+	•	Request Body:
+
+  ```json
+  {
+  "text": "Will my card still arrive this week?"
+  }
+  ```
+
+  •	Response:
+	•	On success (200 OK):
+
+  ```json
+  {
+  "predicted_intent": "card_delivery_status",
+  "confidence_score": 0.95,
+  "query_id": 123
+  }
+  ```
+
+  •	On error (400 Bad Request or 500 Internal Server Error):
+
+  ```json
+  {
+  "error": "Invalid input format"  // Example error message
+  }
+  ```
+
+  2. /submit_feedback
+
+	- Description: This endpoint allows users to submit feedback on the predicted intent. If the intent was incorrect, the user can submit the correct intent.
+	- Method: POST
+	- Endpoint URL: /submit_feedback
+	- Request Body:
+
+  ```json
+  {
+  "query_id": 123,
+  "is_correct": false,
+  "corrected_intent": "activate_card"
+  }
+  ```
+
+  - query_id: The ID of the query (provided by the /inference response).
+	- is_correct: A boolean value indicating whether the predicted intent was correct or not.
+	- corrected_intent: The corrected intent, required only when is_correct is false.
+
+  - Response:
+	  -	On success (200 OK):
+
+  ```json
+  {
+  "message": "Feedback submitted successfully"
+  }
+  ```
+
+  - On error (400 Bad Request or 500 Internal Server Error):
+  ```json
+  {
+  "error": "Failed to submit feedback"
+  }
+  ```
 
 ## Dataset
 
