@@ -12,9 +12,10 @@ def insert_user_query(supabase: Client, query_text: str, predicted_intent: str,
         confidence_score (float, optional): Prediction confidence score.
         created_at (str, optional): The timestamp when the query was \
                                    submitted.
-    
     Returns:
         dict: The inserted record.
+     Raises:
+        Exception: If the insert operation fails.
     """
     data = {
         "query_text": query_text,
@@ -23,10 +24,20 @@ def insert_user_query(supabase: Client, query_text: str, predicted_intent: str,
         "created_at": created_at,
     }
     
-    response = supabase.table("user_queries").insert(data).execute()      
-    return response.data
+    try:
+        response = supabase.table("user_queries").insert(data).execute()      
+        if response.status_code != 201:
+            status_code = response.status_code
+            error_details = response.model_dump_json()
+            raise Exception(
+              f"Failed to insert user query: {status_code} - {error_details}")
+        return response.data
   
-
+    except Exception as e:
+        print(f"Error inserting user query: {e}")
+        raise
+  
+  
 def insert_feedback(supabase: Client, query_id: int, is_correct: bool,
                     corrected_intent: str = None, created_at: str = None):
     """
@@ -41,13 +52,25 @@ def insert_feedback(supabase: Client, query_id: int, is_correct: bool,
                                    submitted.
     Returns:
         dict: The inserted feedback record.
+    Raises:
+        Exception: If the insert operation fails.
     """
+    
     data = {
         "query_id": query_id,
         "is_correct": is_correct,
         "corrected_intent": corrected_intent,
         "created_at": created_at
     }
-    
-    response = supabase.table("feedback").insert(data).execute() 
-    return response.data
+    try:
+        response = supabase.table("feedback").insert(data).execute()
+        if response.status_code != 201:
+            status_code = response.status_code
+            error_details = response.model_dump_json()
+            raise Exception(
+              f"Failed to insert feedback: {status_code} - {error_details}")
+        return response.data
+
+    except Exception as e:
+        print(f"Error inserting feedback: {e}")
+        raise
