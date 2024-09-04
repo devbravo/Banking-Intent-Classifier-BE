@@ -27,6 +27,7 @@ from src.data_preprocessing.text_processing import numericalize
 from src.utils.get_device import get_device
 from src.api.database import log_query_to_db, log_feedback_to_db
 from src.schemas.schemas import FeedbackModel, InferenceResponseModel 
+from pydantic import ValidationError
 
 
 DEVICE = get_device()
@@ -49,35 +50,47 @@ def inference(text: str) -> InferenceResponseModel:
       Returns:
           str: The predicted label representing the customer's intent.
     """
-    cleaned_text = clean_text(text)
-    lemmatized_text = lemmatizer(cleaned_text)
-    numericalized_text = numericalize(vocab, lemmatized_text)
-    tensor_text = torch.tensor(numericalized_text).to(DEVICE)
-    
-    with torch.no_grad():
-        logits = classifier.run(tensor_text)
-        probas = F.softmax(logits, dim=1).cpu().numpy()
-        pred_index = torch.argmax(logits, dim=1).cpu().numpy()[0]
-        confidence_score = float(probas[0][pred_index])
-        predicted_intent = label_mapping[pred_index]
-        
-        query_id = log_query_to_db(text, predicted_intent, confidence_score)
-        
-        print(f"Predicted_labe:, {predicted_intent}", 
-              f"confidence_score: {confidence_score}")
-        
-        return {
-            "predicted_intent": predicted_intent,
-            "confidence_score": confidence_score,
-            "query_id": query_id
-        }
+    try:
+        if not text or not isinstance(text, str):
+            raise ValueError("Invalid input. Please provide a text string.")
+      
+        cleaned_text = clean_text(text)
+        lemmatized_text = lemmatizer(cleaned_text)
+        numericalized_text = numericalize(vocab, lemmatized_text)
+        tensor_text = torch.tensor(numericalized_text).to(DEVICE)
+      
+        with torch.no_grad():
+            logits = classifier.run(tensor_text)
+            probas = F.softmax(logits, dim=1).cpu().numpy()
+            pred_index = torch.argmax(logits, dim=1).cpu().numpy()[0]
+            confidence_score = float(probas[0][pred_index])
+            predicted_intent = label_mapping[pred_index]
+            
+            query_id = log_query_to_db(text, predicted_intent, 
+                                       confidence_score)
+            
+            print(f"Predicted_labe:, {predicted_intent}", 
+                  f"confidence_score: {confidence_score}")
+            
+            return {
+                "predicted_intent": predicted_intent,
+                "confidence_score": confidence_score,
+                "query_id": query_id
+            }
+    except ValueError as ve:
+        raise ValidationError(f'Invalid input: {ve}')
+      
+    except KeyError as ke:
+        raise ValidationError(f'Prediction failed: {ke}')
+      
+    except Exception as e:
+        raise RuntimeError(f'An error occured during inference: {e}')
               
 
 @svc.api(input=JSON(pydantic_model=FeedbackModel), output=JSON())
 def submit_feedback(feedback_data: FeedbackModel) -> dict:
     """
     Submit feedback about the prediction.
-
     Args:
         feedback_data (dict): A dictionary containing feedback information. 
         Expected keys:
@@ -88,17 +101,16 @@ def submit_feedback(feedback_data: FeedbackModel) -> dict:
     Returns:
         dict: A confirmation message.
     """
-    query_id = feedback_data.query_id
-    is_correct = feedback_data.is_correct
-    corrected_intent = feedback_data.corrected_intent
-
-    if not query_id:
-        return {"error": "Query ID is missing."}, 400
-    if is_correct is None:
-        return {"error": "is_correct field is required"}, 400
-
     try:
+        query_id = feedback_data.query_id
+        is_correct = feedback_data.is_correct
+        corrected_intent = feedback_data.corrected_intent
+        
         log_feedback_to_db(query_id, is_correct, corrected_intent)
         return {"message": "Feedback submitted successfully"}, 200
+      
+    except ValueError as ve: 
+        return {"error": str(ve)}, 400
+            
     except Exception as e:
-        return {"error": str(e)}, 500
+        return {"error": "An unexpected error occured: " + str(e)}, 500
