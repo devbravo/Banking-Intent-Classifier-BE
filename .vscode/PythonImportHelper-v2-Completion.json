@@ -230,6 +230,38 @@
         "documentation": {}
     },
     {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "Client",
         "importPath": "supabase",
         "description": "supabase",
@@ -300,14 +332,6 @@
         "description": "pydantic",
         "isExtraImport": true,
         "detail": "pydantic",
-        "documentation": {}
-    },
-    {
-        "label": "Optional",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
         "documentation": {}
     },
     {
@@ -429,7 +453,7 @@
         "kind": 2,
         "importPath": "src.data_preprocessing.text_processing",
         "description": "src.data_preprocessing.text_processing",
-        "peekOfCode": "def lemmatizer(data: str) -> list[str]:\n    \"\"\"\n    Lemmatizes the input text data by converting words to their base\n    or dictionary form using NLTK's WordNetLemmatizer.\n    The function first tokenizes the input text, assigns \n    part-of-speech (POS) tags, and then lemmatizes each word \n    based on its POS tag.\n    Args:\n        data (str): The input text to be lemmatized.\n    Returns:",
+        "peekOfCode": "def lemmatizer(data: str) -> List[str]:\n    \"\"\"\n    Lemmatizes the input text data by converting words to their base\n    or dictionary form using NLTK's WordNetLemmatizer.\n    The function first tokenizes the input text, assigns \n    part-of-speech (POS) tags, and then lemmatizes each word \n    based on its POS tag.\n    Args:\n        data (str): The input text to be lemmatized.\n    Returns:",
         "detail": "src.data_preprocessing.text_processing",
         "documentation": {}
     },
@@ -438,7 +462,7 @@
         "kind": 2,
         "importPath": "src.data_preprocessing.text_processing",
         "description": "src.data_preprocessing.text_processing",
-        "peekOfCode": "def numericalize(vocab: dict[str, int], data: list[str]) -> list[list[int]]:\n    \"\"\"\n    Converts tokens into their corresponding numerical indices\n    based on a given vocabulary. If a token is not found in the vocabulary,\n    a special '<UNK>' token is used.\n    Args:\n        vocab (dict): A dictionary mapping tokens (words) to their\n                      corresponding numerical indices.\n        data (list): A list of tokens (words) to be converted into numerical\n                     indices.",
+        "peekOfCode": "def numericalize(vocab: Dict[str, int], \n                 data: Union[List[str], List[List[str]]]) -> List[List[int]]:\n    \"\"\"\n    Converts tokens into their corresponding numerical indices\n    based on a given vocabulary. If a token is not found in the vocabulary,\n    a special '<UNK>' token is used.\n    Args:\n        vocab (dict): A dictionary mapping tokens (words) to their\n                      corresponding numerical indices.\n        data (Union[List[str], List[List[str]]]): ",
         "detail": "src.data_preprocessing.text_processing",
         "documentation": {}
     },

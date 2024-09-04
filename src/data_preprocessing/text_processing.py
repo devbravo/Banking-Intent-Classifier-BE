@@ -27,6 +27,7 @@ from nltk import pos_tag
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 import nltk
+from typing import List, Dict, Union
 
 
 nltk.data.path.append('nltk_data')
@@ -90,7 +91,7 @@ def nltk_to_wordnet_pos(nltk_tag: str) -> str:
         return None
       
 
-def lemmatizer(data: str) -> list[str]:
+def lemmatizer(data: str) -> List[str]:
     """
     Lemmatizes the input text data by converting words to their base
     or dictionary form using NLTK's WordNetLemmatizer.
@@ -120,7 +121,8 @@ def lemmatizer(data: str) -> list[str]:
     return lemmatized_words
   
 
-def numericalize(vocab: dict[str, int], data: list[str]) -> list[list[int]]:
+def numericalize(vocab: Dict[str, int], 
+                 data: Union[List[str], List[List[str]]]) -> List[List[int]]:
     """
     Converts tokens into their corresponding numerical indices
     based on a given vocabulary. If a token is not found in the vocabulary,
@@ -128,11 +130,12 @@ def numericalize(vocab: dict[str, int], data: list[str]) -> list[list[int]]:
     Args:
         vocab (dict): A dictionary mapping tokens (words) to their
                       corresponding numerical indices.
-        data (list): A list of tokens (words) to be converted into numerical
+        data (Union[List[str], List[List[str]]]): 
+                     A list of tokens (words) to be converted into numerical
                      indices.
     Returns:
-        list: A list containing a list of numerical indices representing
-              the input text data.
+        List[List[int]]: A list containing a list of numerical indices 
+                        representing the input text data.
     """
     indexed_data = []
     indexed_seq = [vocab.get(token, vocab['<UNK>']) for token in data]
