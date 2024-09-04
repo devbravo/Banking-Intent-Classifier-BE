@@ -73,14 +73,12 @@ class IntentClassifier(nn.Module):
         Forward pass of the model. Processes the input through the embedding 
         layer, bidirectional LSTM, and a series of linear layers to 
         produce class scores.
-
         Args:
             x (torch.Tensor): Input tensor of shape (batch_size, seq_length).
             h0 (torch.Tensor, optional): Initial hidden state for the LSTM. 
                 Defaults to None, which initializes it as zeros.
             c0 (torch.Tensor, optional): Initial cell state for the LSTM. 
                 Defaults to None, which initializes it as zeros.
-
         Returns:
             torch.Tensor: Output tensor of shape (batch_size, num_labels) 
             containing the class scores for each input sequence in the batch.
