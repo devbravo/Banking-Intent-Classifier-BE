@@ -569,7 +569,7 @@
         "kind": 2,
         "importPath": "src.utils.save_model_to_bento",
         "description": "src.utils.save_model_to_bento",
-        "peekOfCode": "def load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      \"\"\"\n    lstm_model = IntentClassifier(config).to(DEVICE)\n    lstm_model.load_state_dict(torch.load(model_file,\n                                          map_location=torch.device(DEVICE),\n                                          weights_only=True))",
+        "peekOfCode": "def load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      Raises:\n        FileNotFoundError: If the model file is not found at the specified \n                           path.\n        RuntimeError: If there is an issue loading the model or saving it to \n                          BentoML.",
         "detail": "src.utils.save_model_to_bento",
         "documentation": {}
     },
@@ -578,7 +578,7 @@
         "kind": 5,
         "importPath": "src.utils.save_model_to_bento",
         "description": "src.utils.save_model_to_bento",
-        "peekOfCode": "DEVICE = get_device()\nprint(f\"Using device: {DEVICE}\")\nwith open('../models/model_config.yaml', 'r', encoding='utf-8') as f:\n    config = yaml.safe_load(f)\ndef load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      \"\"\"",
+        "peekOfCode": "DEVICE = get_device()\nprint(f\"Using device: {DEVICE}\")\nwith open('../models/model_config.yaml', 'r', encoding='utf-8') as f:\n    config = yaml.safe_load(f)\ndef load_model_and_save_to_bento(model_file: Path) -> None:\n    \"\"\"\n      Load a trained PyTorch model from a file and save it to BentoML.\n      Args:\n          model_file (Path): Path to the trained PyTorch model.\n      Raises:",
         "detail": "src.utils.save_model_to_bento",
         "documentation": {}
     }
