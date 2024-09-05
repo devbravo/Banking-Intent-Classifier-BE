@@ -69,11 +69,11 @@ def inference(text: str) -> InferenceResponseModel:
             query_id = log_query_to_db(text, predicted_intent, 
                                        confidence_score)
             
-            return {
-                "predicted_intent": predicted_intent,
-                "confidence_score": confidence_score,
-                "query_id": query_id
-            }
+            return InferenceResponseModel(
+                predicted_intent=predicted_intent,
+                confidence_score=confidence_score,
+                query_id=query_id
+            )
     except ValueError as ve:
         raise ValidationError(f'Invalid input: {ve}')
       

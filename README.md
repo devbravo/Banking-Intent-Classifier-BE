@@ -38,13 +38,13 @@ Customer service plays a crucial role in the banking industry, and efficiently c
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/Customer-Intent-Classification.git
+    git clone https://github.com/devbravo/Banking-Intent-Classifier-BE.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd Customer-Intent-Classification
+    cd Banking Intent Classifier - BE
     ```
 
 3. Install the required dependencies:
@@ -54,32 +54,40 @@ Customer service plays a crucial role in the banking industry, and efficiently c
     ```
 
 ## Usage
+1. **Start project** 
 
-1. **Train the PyTorch model** using the provided dataset:
+   ```bash
+   bentoml serve src.api.service:svc
+   ```
+2. **Build Bento**
 
-    ```bash
-    python src/train.py --config config.yaml
-    ```
+   ```bash
+    bentoml build
+   ```
 
-2. **Export the trained model** and create a BentoML service:
-
-    ```bash
-    python src/export_model.py --model_path model.pth --bento_service service.py
-    ```
-
-3. **Build the Docker container:**
+3 **Build the Docker container:**
 
     ```bash
-    docker build -t customer-intent-classification .
+    bentoml containerize intent-classification:latest 
     ```
 
-4. **Run the Docker container:**
+3. **Run the Docker container:**
 
     ```bash
-    docker run -p 8080:8080 customer-intent-classification
+    docker run --rm -p 3000:3000 intent-classification:xqciyedlbkchfytg
     ```
 
-5. **Access the Streamlit frontend** by navigating to `http://localhost:8080` in your web browser.
+4. **Authenticate with Google Cloud**
+  ```bash
+  gcloud auth configure-docker
+  ```
+
+5. **Push image to Google Cloud
+```bash
+docker push gcr.io/[GC-PROJECT-ID]]/[IMAGE-NAME]:[TAG]
+```
+
+6. **Access the Streamlit frontend** by navigating to `http://localhost:8080` in your web browser.
 
 
 ## API Endpoints
