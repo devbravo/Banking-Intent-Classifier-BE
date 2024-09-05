@@ -3,7 +3,7 @@ from src.db.session import get_supabase_client
 from src.db.models import insert_user_query, insert_feedback
 from datetime import datetime, timezone
 
-logging.basicConfig(lefel=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
